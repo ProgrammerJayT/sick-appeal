@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
@@ -14,6 +15,7 @@ class AccountController extends Controller
     public function index()
     {
         //
+        return Account::all();
     }
 
     /**
@@ -38,6 +40,7 @@ class AccountController extends Controller
     public function show(Account $account)
     {
         //
+        return new AccountResource($account);
     }
 
     /**
