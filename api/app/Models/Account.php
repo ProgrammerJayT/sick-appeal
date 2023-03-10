@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
+    protected $primaryKey = 'account_id';
+    protected $guarded = [];
+    
     use HasFactory;
 }
