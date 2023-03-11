@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AccountResource;
+use App\Filters\AccountsFilter;
 use App\Models\Account;
+use Illuminate\Http\Request;
+use App\Http\Resources\AccountResource;
+use App\Http\Resources\AccountCollection;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 
@@ -12,10 +15,19 @@ class AccountController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Account::all();
+        $filter = new AccountsFilter();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+
+            return new AccountCollection(Account::all());
+        }
+
+        $accounts = Account::where($queryItems)->get();
+        return new AccountCollection($accounts->appends($request->query()));
     }
 
     /**
