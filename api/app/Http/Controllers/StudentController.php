@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\StudentsFilter;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Http\Resources\StudentCollection;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filter = new StudentsFilter();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+
+            return new StudentCollection(Student::all());
+        }
+        return new StudentCollection(Student::where($queryItems)->get());
     }
 
     /**
