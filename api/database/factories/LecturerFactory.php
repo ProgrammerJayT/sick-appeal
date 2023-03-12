@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,9 @@ class LecturerFactory extends Factory
     {
         return [
             //
+            'account_id' => Account::factory(),
+            'name' => $this->faker->firstName(),
+            'surname' => $this->faker->lastName(),
         ];
     }
 }
