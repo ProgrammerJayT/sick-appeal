@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\Generator;
 use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +18,12 @@ class LecturerFactory extends Factory
      */
     public function definition(): array
     {
+        $generator = new Generator;
+        $identity = $generator->generateIdentity();
+
         return [
             //
+            'lecturer_id' => 'LECT'. $identity,
             'account_id' => Account::factory(),
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
