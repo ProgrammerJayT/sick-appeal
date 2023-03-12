@@ -16,6 +16,7 @@ class AccountSeeder extends Seeder
         //
         Account::factory()
             ->hasStudents(1)
+            ->hasLecturers(1)
             ->count(10)
             ->create();
     }
