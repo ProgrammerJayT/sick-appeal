@@ -25,9 +25,7 @@ class AccountController extends Controller
 
             return new AccountCollection(Account::all());
         }
-
-        $accounts = Account::where($queryItems)->get();
-        return new AccountCollection($accounts->appends($request->query()));
+        return new AccountCollection(Account::where($queryItems)->get());
     }
 
     /**
