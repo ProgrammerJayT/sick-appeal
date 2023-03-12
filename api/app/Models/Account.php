@@ -11,14 +11,16 @@ class Account extends Model
 {
     protected $primaryKey = 'account_id';
     protected $guarded = [];
-    
+
     use HasFactory;
 
-    public function students(){
-        return $this->hasMany(Student::class);
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'account_id');
     }
 
-    public function lecturers(){
-        return $this->hasMany(Lecturer::class);
+    public function lecturers()
+    {
+        return $this->hasMany(Lecturer::class, 'account_id');
     }
 }
