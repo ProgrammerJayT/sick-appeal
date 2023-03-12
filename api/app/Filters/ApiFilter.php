@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filters;
+
 use Illuminate\Http\Request;
 
 class ApiFilter
@@ -9,7 +10,30 @@ class ApiFilter
 
     protected $columnMap = array();
 
-    protected $operatorMap = array();
+    protected $operatorMap = array(
+        //equal
+        'eq' => '=',
+        //not equal
+        'ne' => '!=',
+        //greater than
+        'gt' => '>',
+        //greater than or equal
+        'gte' => '>=',
+        //less than
+        'lt' => '<',
+        //less than or equal
+        'lte' => '<=',
+        //like
+        'like' => 'like',
+        //not like
+        'nlike' => 'not like',
+        //in
+        'in' => 'in',
+        //not in
+        'nin' => 'not in',
+        //partial match
+
+    );
 
     public function transform(Request $request)
     {
@@ -29,7 +53,8 @@ class ApiFilter
                     $eloQuery[] = array(
                         $column,
                         $this->operatorMap[$operator],
-                        $query[$operator]
+                        $this->operatorMap[$operator] == 'like' ?
+                        '%' . $query[$operator] . '%' : $query[$operator]
                     );
                 }
             }
