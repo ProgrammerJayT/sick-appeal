@@ -21,11 +21,20 @@ Route::get('/', function () {
 });
 
 Route::get('/Login',[Main_Controller::class,'login_View']) -> name('Login');
+Route::post('/Login',[Main_Controller::class,'Login_User']) -> name('Login');
+
 Route::get('/Register',[Main_Controller::class,'register_View']) -> name('Register');
+Route::post('/Register',[Main_Controller::class,'Register_user']) -> name('Register');
+
+
+
 
 
 Route::get('/Student/Dashboard',[Student_Controller::class,'dashboard']) -> name('Student_Dashboard');
+
 Route::get('/Student/Create-Application',[Student_Controller::class,'application']) -> name('Student_Application');
+Route::post('/Student/Create-Application',[Student_Controller::class,'Student_Application']) -> name('Student_Application');
+
 Route::get('/Student/History',[Student_Controller::class,'history']) -> name('Student_History');
 Route::get('/Student/Profile',[Student_Controller::class,'profile']) -> name('Student_Profile');
 Route::get('/Student/Signout',[Student_Controller::class,'signout']) -> name('Student_Signout');

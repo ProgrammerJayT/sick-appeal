@@ -46,19 +46,32 @@
                         <hr>
                     </div>
                     <div style="padding-left: 0px;margin-top: 50px;margin-left: 0px;">
-                        <form>
-                            <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-notebook text-muted"></i></span><select class="form-select" style="font-family: 'Alegreya Sans SC', sans-serif;">
+
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-notebook text-muted"></i></span><select class="form-select" style="font-family: 'Alegreya Sans SC', sans-serif;" name="module_select">
                                     <optgroup label="Module">
                                         <option value="0" selected="">Module</option>
                                         <option value="1">Student</option>
                                         <option value="2">Lecture</option>
                                         <option value="3">Admin</option>
                                     </optgroup>
-                                </select></div><input class="form-control-plaintext" type="text" value="Attach sick note (Image or PDF)" readonly="" style="font-family: 'Alegreya Sans SC', sans-serif;margin-top: -18px;margin-bottom: -6px;">
-                            <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-paper-clip text-muted"></i></span><input class="form-control" type="file" style="font-family: 'Alegreya Sans SC', sans-serif;"></div>
-                            <div class="input-group" style="height: 150px;margin-bottom: 24px;padding-bottom: 0px;"><span class="input-group-text"><i class="icon-question text-muted"></i></span><textarea class="form-control" placeholder="Reason for application" style="font-family: 'Alegreya Sans SC', sans-serif;"></textarea></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label text-center" for="formCheck-1" style="font-family: 'Alegreya Sans SC', sans-serif;">&nbsp;I have provided a legal note and if not, further action may be taken against me including legal actions.</label></div><button class="btn btn-outline-success border rounded border-success shadow-sm d-flex" type="submit" style="margin-right: 2px;width: 150px;border-color: var(--bs-btn-disabled-border-color);font-family: 'Alegreya Sans SC', sans-serif;margin-top: 33px;margin-left: 250px;">Submit Application</button>
+                                </select></div>
+
+
+                                <input class="form-control-plaintext" type="text" value="Attach sick note (Image or PDF)" readonly="" style="font-family: 'Alegreya Sans SC', sans-serif;margin-top: -18px;margin-bottom: -6px;">
+                            <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-paper-clip text-muted"></i></span><input class="form-control" type="file" style="font-family: 'Alegreya Sans SC', sans-serif;" name="file_attachment"></div>
+
+
+
+                            <div class="input-group" style="height: 150px;margin-bottom: 24px;padding-bottom: 0px;"><span class="input-group-text"><i class="icon-question text-muted"></i></span><textarea class="form-control" placeholder="Reason for application" style="font-family: 'Alegreya Sans SC', sans-serif;" name="student_reason"></textarea></div>
+
+
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" name="student_agreebox"><label class="form-check-label text-center" for="formCheck-1" style="font-family: 'Alegreya Sans SC', sans-serif;">&nbsp;I have provided a legal note and if not, further action may be taken against me including legal actions.</label></div><button class="btn btn-outline-success border rounded border-success shadow-sm d-flex" type="submit" style="margin-right: 2px;width: 150px;border-color: var(--bs-btn-disabled-border-color);font-family: 'Alegreya Sans SC', sans-serif;margin-top: 33px;margin-left: 250px;">Submit Application</button>
+
+
                         </form>
+
                     </div>
                 </div>
             </div>

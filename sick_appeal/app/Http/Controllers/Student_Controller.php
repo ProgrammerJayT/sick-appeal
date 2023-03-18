@@ -16,6 +16,18 @@ class Student_Controller extends Controller
         return view('student.application');
     }
 
+    public function Student_Application(Request $request)
+    {
+        $this->validate($request,([
+            'module_select'=>'required',
+            'file_attachment'=>'required',
+            'student_reason'=>'required',
+        ]));
+    }
+
+
+
+
     public function history()
     {
         return view('student.history');

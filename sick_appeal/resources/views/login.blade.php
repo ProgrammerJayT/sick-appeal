@@ -28,10 +28,27 @@
             </div>
             <div class="row text-center d-flex align-content-center" style="margin-top: 40px;">
                 <div class="col text-center d-flex justify-content-center align-items-center align-content-center align-self-center" style="padding-top: 100px;">
-                    <form>
-                        <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-envelope text-muted"></i></span><input class="form-control" type="email" placeholder="User@email.com" name="user_Email"></div>
-                        <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-lock text-muted"></i></span><input class="form-control" type="password" placeholder="Password" name="password"></div><button class="btn btn-outline-primary border rounded border-success shadow-sm" type="submit" style="margin-right: 2px;width: 150px;border-color: var(--bs-btn-disabled-border-color);">Sign In</button>
-                        <p style="padding-top: 15px;">In need of an account? <a class="link-primary" href="google.com">  Register</a></p>
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-envelope text-muted"></i></span><input class="form-control" type="email" placeholder="User@email.com" name="user_Email" ></div>
+
+                        @error('user_Email')
+                            <div>
+                                <p class="text-danger border rounded border-2 border-danger shadow-sm pulse animated">This Field Is Required</p>
+                            </div>
+                        @enderror
+
+                        <div class="input-group" style="padding-bottom: 20px;height: 60px;"><span class="input-group-text"><i class="icon-lock text-muted"></i></span><input class="form-control" type="password" placeholder="Password" name="password"></div>
+
+                        @error('password')
+                            <div>
+                                <p class="text-danger border rounded border-2 border-danger shadow-sm pulse animated">This Field Is Required</p>
+                            </div>
+                        @enderror
+
+                        <button class="btn btn-outline-primary border rounded border-success shadow-sm" type="submit" style="margin-right: 2px;width: 150px;border-color: var(--bs-btn-disabled-border-color);">Sign In</button>
+
+                        <p style="padding-top: 15px;">In need of an account? <a class="link-primary" href={{Route('Register')}}>  Register</a></p>
                     </form>
                 </div>
             </div>
