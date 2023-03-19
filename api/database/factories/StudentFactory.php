@@ -21,12 +21,17 @@ class StudentFactory extends Factory
         $generator = new Generator;
         $identity = $generator->generateIdentity();
 
+        $name = ucfirst(strtolower($this->faker->firstName()));
+        $surname = ucfirst(strtolower($this->faker->lastName()));
+        $email = strtolower($identity . '@tut4life.ac.za');
+
         return [
             //
             'student_id' => $identity,
-            'account_id' => Account::factory(),
-            'name' => $this->faker->firstName(),
-            'surname' => $this->faker->lastName(),
+            'account_id' => 0,
+            'name' => $name,
+            'surname' => $surname,
+            'email' => $email,
         ];
     }
 }
