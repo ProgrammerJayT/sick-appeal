@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('role');
             $table->string('status')->default('active');
             $table->boolean('email_verified')->default(false);
-            $table->string('email_verification_token');
+            $table->string('email_verification_token')->nullable();
             $table->timestamps();
         });
     }
