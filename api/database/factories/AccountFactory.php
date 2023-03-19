@@ -21,7 +21,6 @@ class AccountFactory extends Factory
 
         return [
             //
-            'email' => $this->faker->safeEmail(),
             'password' => Hash::make('password'),
             'role' => $role,
         ];
