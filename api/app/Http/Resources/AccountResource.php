@@ -19,23 +19,23 @@ class AccountResource extends JsonResource
     {
         return array(
             'accountId' => $this->account_id,
-            'type' => $this->type,
+            'role' => $this->role,
             'status' => $this->status,
             'email' => $this->email,
             'emailVerified' => $this->email_verified,
-            'user' => $this->getUser($this->type, $this->account_id),
+            'user' => $this->getUser($this->role, $this->account_id),
         );
     }
 
-    public function getUser($type, $accountId)
+    public function getUser($role, $accountId)
     {
-        switch ($type) {
+        switch ($role) {
             case 'student':
                 $user = new StudentResource(Student::where('account_id', $accountId)->first());
                 break;
 
             case 'admin':
-                // $user = new AdminResource(Admin::where('account_id', $accountId)->first());
+                $user = new AdminResource(Admin::where('account_id', $accountId)->first());
                 break;
 
             case 'lecturer':
@@ -43,10 +43,9 @@ class AccountResource extends JsonResource
                 break;
 
             default:
-                # code...
+                $user = null;
                 break;
         }
-
-        return $user;
+        return $user == null ? false : $user;
     }
 }
