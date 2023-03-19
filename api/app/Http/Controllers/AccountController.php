@@ -19,13 +19,17 @@ class AccountController extends Controller
     {
         //
         $filter = new AccountsFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
+        $includeUsers = $request->query('includeUsers');
 
-            return new AccountCollection(Account::all());
+        $accounts = Account::where($filterItems);
+
+        if ($includeUsers) {
+            $accounts = $accounts->with('lecturer')->with('student')->with('admin');
         }
-        return new AccountCollection(Account::where($queryItems)->get());
+
+        return new AccountCollection($accounts->get());
     }
 
     /**
