@@ -23,10 +23,11 @@ class LecturerFactory extends Factory
 
         return [
             //
-            'lecturer_id' => 'LECT'. $identity,
-            'account_id' => Account::factory(),
+            'lecturer_id' => 'LECT' . $identity,
+            'account_id' => 0,
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
+            'email' => $this->faker->email(),
         ];
     }
 }
