@@ -12,9 +12,11 @@ return new class extends Migration {
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->integer('account_id')->autoIncrement();
-            $table->string('email');
             $table->string('password');
             $table->string('role');
+            $table->string('status')->default('active');
+            $table->boolean('email_verified')->default(false);
+            $table->string('email_verification_token');
             $table->timestamps();
         });
     }
