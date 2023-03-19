@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('modules')->nullable();
             $table->string('name');
             $table->string('surname');
+            $table->string('email');
             $table->timestamps();
         });
     }
