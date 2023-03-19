@@ -21,13 +21,17 @@ class LecturerFactory extends Factory
         $generator = new Generator;
         $identity = $generator->generateIdentity();
 
+        $name = ucfirst(strtolower($this->faker->firstName()));
+        $surname = ucfirst(strtolower($this->faker->lastName()));
+        $email = strtolower($name . '.' . $surname . '@tut4life.ac.za');
+
         return [
             //
             'lecturer_id' => 'LECT' . $identity,
             'account_id' => 0,
-            'name' => $this->faker->firstName(),
-            'surname' => $this->faker->lastName(),
-            'email' => $this->faker->email(),
+            'name' => $name,
+            'surname' => $surname,
+            'email' => $email,
         ];
     }
 }
