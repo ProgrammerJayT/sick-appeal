@@ -17,6 +17,7 @@ class LecturerResource extends JsonResource
         return array(
             'lecturerId' => $this->lecturer_id,
             'accountId' => $this->account_id,
+            'courseId' => $this->course_id,
             'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
