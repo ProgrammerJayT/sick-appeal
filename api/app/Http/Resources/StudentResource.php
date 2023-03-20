@@ -17,10 +17,10 @@ class StudentResource extends JsonResource
         return array(
             'studentId' => $this->student_id,
             'accountId' => $this->account_id,
+            'courseId' => $this->course_id,
             'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
-            'modules' => $this->modules
         );
     }
 }
