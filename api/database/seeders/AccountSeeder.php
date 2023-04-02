@@ -16,7 +16,7 @@ class AccountSeeder extends Seeder
     public function run(): void
     {
         //
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $account = Account::factory(1)
                 ->create();
 
@@ -26,29 +26,47 @@ class AccountSeeder extends Seeder
 
     public function createUser($account)
     {
-        switch ($account[0]->role) {
+        $account = $account[0];
+        $type = $account->type;
+        $emailBreakdown = explode('@', $account->email);
+
+        if ($account->type == 'admin') {
+            $fullName = explode('.', $emailBreakdown[0]);
+            $name = $fullName[0];
+            $surname = $fullName[1];
+        } else {
+            $name = fake()->firstName();
+            $surname = fake()->lastName();
+            $id = $emailBreakdown[0];
+        }
+
+        switch ($type) {
             case 'student':
                 $model = new Student();
-                $user = $model->factory(1)->create(
-                    array(
-                        'account_id' => $account[0]->account_id
-                    )
+                $data = array(
+                    'account_id' => $account->account_id,
+                    'name' => ucfirst(strtolower($name)),
+                    'surname' => ucfirst(strtolower($surname)),
+                    'student_id' => $id
                 );
                 break;
 
             case 'lecturer':
-                $user = Lecturer::factory(1)->create(
-                    array(
-                        'account_id' => $account[0]->account_id
-                    )
+                $model = new Lecturer();
+                $data = array(
+                    'account_id' => $account->account_id,
+                    'name' => ucfirst(strtolower($name)),
+                    'surname' => ucfirst(strtolower($surname)),
+                    'lecturer_id' => $id
                 );
                 break;
 
             case 'admin':
-                $user = Admin::factory(1)->create(
-                    array(
-                        'account_id' => $account[0]->account_id
-                    )
+                $model = new Admin();
+                $data = array(
+                    'account_id' => $account->account_id,
+                    'name' => ucfirst(strtolower($name)),
+                    'surname' => ucfirst(strtolower($surname)),
                 );
                 break;
 
@@ -57,6 +75,6 @@ class AccountSeeder extends Seeder
                 break;
         }
 
-        return $user;
+        return $model->factory(1)->create($data);
     }
 }
