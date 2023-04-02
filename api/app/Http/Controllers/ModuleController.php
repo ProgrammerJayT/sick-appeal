@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ModulesFilter;
 use App\Models\Module;
 use App\Http\Requests\StoreModuleRequest;
 use App\Http\Requests\UpdateModuleRequest;
+use App\Http\Resources\ModuleCollection;
+use App\Http\Resources\ModuleResource;
+use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-    }
+        $filter = new ModulesFilter();
+        $filterItems = $filter->transform($request);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new ModuleCollection(Module::where($filterItems)->get());
     }
 
     /**
@@ -38,14 +38,7 @@ class ModuleController extends Controller
     public function show(Module $module)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Module $module)
-    {
-        //
+        return new ModuleResource($module);
     }
 
     /**

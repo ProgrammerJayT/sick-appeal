@@ -3,10 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Models\Admin;
-use App\Models\Student;
 use App\Models\Lecturer;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Crypt;
 
 class AccountResource extends JsonResource
 {
@@ -19,17 +20,18 @@ class AccountResource extends JsonResource
     {
         return array(
             'accountId' => $this->account_id,
-            'role' => $this->role,
+            'type' => $this->type,
             'status' => $this->status,
             'email' => $this->email,
             'emailVerified' => $this->email_verified,
-            'user' => $this->getUser($this->role, $this->account_id),
+            'password' => Crypt::decrypt($this->password),
+            'user' => $this->getUser($this->type, $this->account_id),
         );
     }
 
-    public function getUser($role, $accountId)
+    public function getUser($type, $accountId)
     {
-        switch ($role) {
+        switch ($type) {
             case 'student':
                 $user = new StudentResource(Student::where('account_id', $accountId)->first());
                 break;
@@ -43,9 +45,10 @@ class AccountResource extends JsonResource
                 break;
 
             default:
-                $user = null;
+                # code...
                 break;
         }
-        return $user == null ? false : $user;
+
+        return $user;
     }
 }

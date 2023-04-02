@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lecturer;
 use App\Http\Requests\StoreLecturerRequest;
 use App\Http\Requests\UpdateLecturerRequest;
+use App\Http\Resources\LecturerResource;
 
 class LecturerController extends Controller
 {
@@ -17,19 +18,26 @@ class LecturerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLecturerRequest $request)
+    public function store($data)
     {
         //
+        try {
+            return new LecturerResource(
+                Lecturer::create(
+                    array(
+                        'name' => $data['name'],
+                        'surname' => $data['surname'],
+                        'lecturer_id' => $data['userId'],
+                        'account_id' => $data['accountId'],
+                    )
+                )
+            );
+        } catch (\Throwable $th) {
+
+            throw $th;
+        }
     }
 
     /**
@@ -38,14 +46,7 @@ class LecturerController extends Controller
     public function show(Lecturer $lecturer)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Lecturer $lecturer)
-    {
-        //
+        return new LecturerResource($lecturer);
     }
 
     /**

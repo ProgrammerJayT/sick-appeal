@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\CoursesFilter;
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Http\Resources\CourseCollection;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-    }
+        $filter = new CoursesFilter();
+        $filterItems = $filter->transform($request);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $includeCourses = $request->query('include_modules');
+
+        $courses = Course::where($filterItems);
+
+        if ($includeCourses) {
+            $courses = $courses->with('modules');
+        }
+
+        return new CourseCollection($courses->get());
     }
 
     /**
@@ -29,7 +37,17 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        //Get values from POST request
+        $name = $request->name;
+
+        //Attempt to create course
+        $course = Course::create(
+            array(
+                'name' => $name
+            )
+        );
+
+        return new CourseResource($course);
     }
 
     /**
@@ -38,14 +56,7 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        //
+        return new CourseResource($course);
     }
 
     /**
@@ -62,5 +73,6 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
+        return $course->delete();
     }
 }

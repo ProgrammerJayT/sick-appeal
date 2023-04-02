@@ -7,6 +7,8 @@ use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentCollection;
+use App\Http\Resources\StudentResource;
+use App\Models\Account;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -18,29 +20,39 @@ class StudentController extends Controller
     {
         //
         $filter = new StudentsFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
+        $includeCourses = $request->query('include_modules');
 
-            return new StudentCollection(Student::all());
+        $students = Student::where($filterItems);
+
+        if ($includeCourses) {
+            $students = $students->with('modules');
         }
-        return new StudentCollection(Student::where($queryItems)->get());
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new StudentCollection($students->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store($data)
     {
-        //
+        try {
+            return new StudentResource(
+                Student::create(
+                    array(
+                        'name' => $data['name'],
+                        'surname' => $data['surname'],
+                        'student_id' => $data['userId'],
+                        'account_id' => $data['accountId'],
+                    )
+                )
+            );
+        } catch (\Throwable $th) {
+
+            throw $th;
+        }
     }
 
     /**
@@ -49,14 +61,7 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Student $student)
-    {
-        //
+        return new StudentResource($student);
     }
 
     /**
@@ -73,5 +78,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+        return $student->delete();
     }
 }

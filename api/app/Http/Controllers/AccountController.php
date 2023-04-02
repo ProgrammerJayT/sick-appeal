@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\AccountsFilter;
 use App\Models\Account;
+use App\Models\Student;
+use App\Models\Lecturer;
 use Illuminate\Http\Request;
+use App\Filters\AccountsFilter;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\AccountResource;
 use App\Http\Resources\AccountCollection;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
+use Illuminate\Support\Facades\Crypt;
 
 class AccountController extends Controller
 {
@@ -33,19 +37,93 @@ class AccountController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAccountRequest $request)
     {
         //
+        if ($this->checkUser($request->type, $request->userId)) {
+            return response(
+                array(
+                    'message' => 'User account already exists'
+                ),
+                403
+            );
+        }
+
+        $newAccount = Account::create(
+            array(
+                'type' => $request->type,
+                'password' => Crypt::encrypt('password'),
+                'status' => $request->status,
+                'email' => $request->email,
+                'email_verified' => false,
+            )
+        );
+
+        $createUserData = array(
+            'accountId' => $newAccount->account_id,
+            'name' => ucfirst(strtolower(trim($request->name))),
+            'surname' => ucfirst(strtolower(trim($request->surname))),
+            'userId' => $request->userId,
+            'type' => $newAccount->type
+        );
+
+        $this->createUser($createUserData);
+
+        return new AccountResource($newAccount);
+    }
+
+    /**
+     * Check if user exists
+     */
+    public function checkUser($type, $id)
+    {
+        switch ($type) {
+            case 'student':
+                $model = new Student();
+                break;
+
+            case 'lecturer':
+                $model = new Lecturer();
+                break;
+
+            default:
+                $model = null;
+                break;
+        }
+
+        if ($model == null) {
+            return false;
+        }
+
+        return $model->find($id);
+    }
+
+    /**
+     * Now create user type based off of type
+     */
+    public function createUser($data)
+    {
+        switch ($data['type']) {
+            case 'student':
+                $userController = new StudentController();
+                break;
+
+            case 'lecturer':
+                $userController = new LecturerController();
+                break;
+
+            case 'admin':
+                $userController = new AdminController();
+                break;
+
+            default:
+                //
+                break;
+        }
+
+        return $userController->store($data);
     }
 
     /**
@@ -54,15 +132,11 @@ class AccountController extends Controller
     public function show(Account $account)
     {
         //
-        return new AccountResource($account);
-    }
+        if ($account == null) {
+            return response('Account not found', 404);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Account $account)
-    {
-        //
+        return new AccountResource($account);
     }
 
     /**
@@ -79,5 +153,6 @@ class AccountController extends Controller
     public function destroy(Account $account)
     {
         //
+        return $account->delete();
     }
 }
