@@ -16,15 +16,10 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->firstName();
-        $surname = $this->faker->lastName();
-        $email = $this->faker->email();
-
         return [
             //
-            'name' => $name,
-            'surname' => $surname,
-            'email' => $email,
+            'name' => $this->faker->firstName(),
+            'surname' => $this->faker->lastName(),
         ];
     }
 }

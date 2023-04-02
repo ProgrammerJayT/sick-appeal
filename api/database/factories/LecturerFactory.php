@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Http\Controllers\Generator;
-use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,20 +16,10 @@ class LecturerFactory extends Factory
      */
     public function definition(): array
     {
-        $generator = new Generator;
-        $identity = $generator->generateIdentity();
-
-        $name = ucfirst(strtolower($this->faker->firstName()));
-        $surname = ucfirst(strtolower($this->faker->lastName()));
-        $email = strtolower($name . '.' . $surname . '@tut4life.ac.za');
-
         return [
             //
-            'lecturer_id' => 'LECT' . $identity,
-            'account_id' => 0,
-            'name' => $name,
-            'surname' => $surname,
-            'email' => $email,
+            'name' => $this->faker->firstName(),
+            'surname' => $this->faker->lastName(),
         ];
     }
 }
