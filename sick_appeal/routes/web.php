@@ -16,39 +16,57 @@ use App\Http\Controllers\Main_Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/Login',[Main_Controller::class,'login_View']) -> name('Login');
+// Route::post('/Login',[Main_Controller::class,'Login_User']) -> name('Login');
+
+// Route::get('/Register',[Main_Controller::class,'register_View']) -> name('Register');
+// Route::post('/Register',[Main_Controller::class,'Register_user']) -> name('Register');
+
+
+
+
+
+// Route::get('/Student/Dashboard',[Student_Controller::class,'dashboard']) -> name('Student_Dashboard');
+
+// Route::get('/Student/Create-Application',[Student_Controller::class,'application']) -> name('Student_Application');
+// Route::post('/Student/Create-Application',[Student_Controller::class,'Student_Application']) -> name('Student_Application');
+
+// Route::get('/Student/History',[Student_Controller::class,'history']) -> name('Student_History');
+// Route::get('/Student/Profile',[Student_Controller::class,'profile']) -> name('Student_Profile');
+// Route::get('/Student/Signout',[Student_Controller::class,'signout']) -> name('Student_Signout');
+
+// Route::get('/Lecture/Dashboard',[Lecture_Controller::class,'dashboard']) -> name('Lecture_Dashboard');
+
+
+// Route::get('/Lecture/Profile',[Lecture_Controller::class,'profile']) -> name('Lecture_Profile');
+// Route::get('/Lecture/Signout',[Lecture_Controller::class,'signout']) -> name('Lecture_Signout');
+// Route::get('/Lecture/History',[Lecture_Controller::class,'history']) -> name('Lecture_History');
+// Route::get('/Lecture/Applications/New',[Lecture_Controller::class,'applications']) -> name('Lecture_Applications');
+// Route::get('/Lecture/Applications/New/ID',[Lecture_Controller::class,'application_view']) -> name('Application_View');
+
+Route::fallback(function () {
+    //Remove message passed to login route if fallback route is called
+    // session()->forget('warning');
+    return redirect()->route('login');
 });
 
-Route::get('/Login',[Main_Controller::class,'login_View']) -> name('Login');
-Route::post('/Login',[Main_Controller::class,'Login_User']) -> name('Login');
+Route::middleware([AuthCheck::class])->group(function () {
+    Route::get('/', Home::class)->name('home');
 
-Route::get('/Register',[Main_Controller::class,'register_View']) -> name('Register');
-Route::post('/Register',[Main_Controller::class,'Register_user']) -> name('Register');
+    //Auth routes
+    Route::get('/register', Register::class)->name('register');
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/logout', function () {
+        //Remove all session data
+        session()->flush();
+        return redirect()->route('login');
+    })->name('logout');
 
-
-
-
-
-Route::get('/Student/Dashboard',[Student_Controller::class,'dashboard']) -> name('Student_Dashboard');
-
-Route::get('/Student/Create-Application',[Student_Controller::class,'application']) -> name('Student_Application');
-Route::post('/Student/Create-Application',[Student_Controller::class,'Student_Application']) -> name('Student_Application');
-
-Route::get('/Student/History',[Student_Controller::class,'history']) -> name('Student_History');
-Route::get('/Student/Profile',[Student_Controller::class,'profile']) -> name('Student_Profile');
-Route::get('/Student/Signout',[Student_Controller::class,'signout']) -> name('Student_Signout');
-
-
-
-
-
-
-Route::get('/Lecture/Dashboard',[Lecture_Controller::class,'dashboard']) -> name('Lecture_Dashboard');
-
-
-Route::get('/Lecture/Profile',[Lecture_Controller::class,'profile']) -> name('Lecture_Profile');
-Route::get('/Lecture/Signout',[Lecture_Controller::class,'signout']) -> name('Lecture_Signout');
-Route::get('/Lecture/History',[Lecture_Controller::class,'history']) -> name('Lecture_History');
-Route::get('/Lecture/Applications/New',[Lecture_Controller::class,'applications']) -> name('Lecture_Applications');
-Route::get('/Lecture/Applications/New/ID',[Lecture_Controller::class,'application_view']) -> name('Application_View');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    // Route::get('/courses', AllCourses::class)->name('courses');
+    // Route::get('/users.create', CreateUser::class)->name('create-user');
+});
