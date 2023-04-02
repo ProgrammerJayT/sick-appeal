@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call(
             array(
                 AccountSeeder::class,
+                CourseSeeder::class,
+                ModuleSeeder::class,
             )
         );
     }
