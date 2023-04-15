@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Account;
 use App\Models\Admin;
+use App\Models\Course;
 use App\Models\Lecturer;
 use App\Models\Student;
 use Illuminate\Database\Seeder;
@@ -57,7 +58,8 @@ class AccountSeeder extends Seeder
                     'account_id' => $account->account_id,
                     'name' => ucfirst(strtolower($name)),
                     'surname' => ucfirst(strtolower($surname)),
-                    'lecturer_id' => $id
+                    'lecturer_id' => $id,
+                    'course_id' => Course::inRandomOrder()->firstOrFail()->getKey()
                 );
                 break;
 
