@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Course;
+use App\Models\CourseModule;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Module extends Model
 {
     protected $primaryKey = 'module_id';
     protected $guarded = [];
     use HasFactory;
+
+    public function courseModules()
+    {
+        return $this->hasMany(CourseModule::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_modules');
+    }
 }
