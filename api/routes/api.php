@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
@@ -21,6 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Users
 Route::apiResource('accounts', AccountController::class);
 Route::apiResource('lecturers', LecturerController::class);
 Route::apiResource('students', StudentController::class);
+
+//Academic
+Route::apiResource('courses', CourseController::class);
