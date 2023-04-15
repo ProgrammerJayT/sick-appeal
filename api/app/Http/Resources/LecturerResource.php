@@ -20,6 +20,7 @@ class LecturerResource extends JsonResource
             'accountId' => $this->account_id,
             'name' => $this->name,
             'surname' => $this->surname,
+            'courseId' => $this->course_id
         );
     }
 }
