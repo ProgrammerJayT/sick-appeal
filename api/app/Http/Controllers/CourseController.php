@@ -21,15 +21,7 @@ class CourseController extends Controller
         $filter = new CoursesFilter();
         $filterItems = $filter->transform($request);
 
-        $includeCourses = $request->query('include_modules');
-
-        $courses = Course::where($filterItems);
-
-        if ($includeCourses) {
-            $courses = $courses->with('modules');
-        }
-
-        return new CourseCollection($courses->get());
+        return new CourseCollection(Course::where($filterItems)->get());
     }
 
     /**

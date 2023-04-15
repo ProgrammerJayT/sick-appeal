@@ -25,15 +25,7 @@ class AccountController extends Controller
         $filter = new AccountsFilter();
         $filterItems = $filter->transform($request);
 
-        $includeUsers = $request->query('includeUsers');
-
-        $accounts = Account::where($filterItems);
-
-        if ($includeUsers) {
-            $accounts = $accounts->with('lecturer')->with('student')->with('admin');
-        }
-
-        return new AccountCollection($accounts->get());
+        return new AccountCollection(Account::where($filterItems)->get());
     }
 
     /**
