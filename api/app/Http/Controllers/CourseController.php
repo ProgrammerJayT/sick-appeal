@@ -37,15 +37,21 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //Get values from POST request
+        // Get the course name from the request
         $name = $request->name;
 
-        //Attempt to create course
-        $course = Course::create(
-            array(
-                'name' => $name
-            )
-        );
+        // Check if the course already exists in the database
+        $existingCourse = Course::where('name', $name)->first();
+
+        if ($existingCourse) {
+            // If the course already exists, return an error response
+            return response()->json(['error' => 'Course already exists'], 409);
+        }
+
+        // If the course doesn't exist, create it
+        $course = Course::create([
+            'name' => $name
+        ]);
 
         return new CourseResource($course);
     }
