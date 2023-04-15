@@ -16,10 +16,6 @@ return new class extends Migration {
             $table->integer('student_id');
             $table->string('verdict');
             $table->timestamps();
-
-            //Constraints
-            $table->foreign('test_id')->references('test_id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('student_id')->references('student_id')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

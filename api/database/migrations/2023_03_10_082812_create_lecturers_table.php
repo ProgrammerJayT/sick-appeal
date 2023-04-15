@@ -17,10 +17,6 @@ return new class extends Migration {
             $table->string('name');
             $table->string('surname');
             $table->timestamps();
-
-            //Constraints
-            $table->foreign('account_id')->references('account_id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('course_id')->references('course_id')->cascadeOnUpdate();
         });
     }
 
