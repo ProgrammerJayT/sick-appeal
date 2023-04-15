@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->integer('module_id')->autoIncrement();
-            $table->integer('course_id');
             $table->string('name');
             $table->string('code');
             $table->timestamps();
