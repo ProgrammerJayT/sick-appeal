@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseModule extends Model
 {
+    protected $primaryKey = 'course_module_id';
+    protected $guarded = [];
     use HasFactory;
 }

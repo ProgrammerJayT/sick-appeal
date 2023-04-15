@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appeal extends Model
 {
+    protected $primaryKey = 'appeal_id';
+    protected $guarded = [];
     use HasFactory;
 }

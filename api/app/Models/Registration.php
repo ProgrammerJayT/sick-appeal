@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
+    protected $primaryKey = 'registration_id';
+    protected $guarded = [];
     use HasFactory;
 }
