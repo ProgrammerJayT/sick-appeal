@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('lecturers', function (Blueprint $table) {
-            $table->integer('lecturer_id')->autoIncrement();
+            $table->integer('lecturer_id')->primary();
             $table->integer('account_id');
             $table->integer('course_id');
             $table->string('name');
