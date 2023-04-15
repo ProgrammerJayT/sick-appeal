@@ -16,7 +16,6 @@ class ModuleResource extends JsonResource
     {
         return array(
             'moduleId' => $this->module_id,
-            'courseId' => $this->course_id,
             'name' => $this->name,
             'code' => $this->code,
         );
