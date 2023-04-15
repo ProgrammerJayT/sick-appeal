@@ -4,15 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('student_modules', function (Blueprint $table) {
-            $table->id();
+            $table->integer('student_module_id')->autoIncrement();
+            $table->integer('course_module_id');
+            $table->integer('student_id');
             $table->timestamps();
         });
     }
