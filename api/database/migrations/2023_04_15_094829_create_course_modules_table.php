@@ -11,14 +11,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('course_modules', function (Blueprint $table) {
-            $table->integer('course_module_id')->primary();
+            $table->integer('course_module_id')->autoIncrement();
             $table->integer('course_id');
             $table->integer('module_id');
+            $table->timestamps();
 
             //Table constraints
             $table->foreign('course_id')->references('course_id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('module_id')->references('module_id')->on('modules')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
         });
     }
 
