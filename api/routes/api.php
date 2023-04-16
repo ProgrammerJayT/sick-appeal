@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,4 @@ Route::apiResource('students', StudentController::class);
 //Academic
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
+Route::apiResource('tests', TestController::class);
