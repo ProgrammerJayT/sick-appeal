@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\TestsFilter;
 use App\Models\Test;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
+use App\Http\Resources\TestCollection;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filter = new TestsFilter();
+        $filterItems = $filter->transform($request);
+
+        return new TestCollection(Test::where($filterItems)->get());
     }
 
     /**
