@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->integer('account_id')->autoIncrement();
             $table->string('type');
             $table->string('password');
-            $table->string('status');
+            $table->string('status')->default('active');
             $table->string('email');
             $table->boolean('email_verified')->default(false);
             $table->string('email_verification_token')->nullable();
