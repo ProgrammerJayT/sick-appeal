@@ -47,7 +47,6 @@ class AccountController extends Controller
             array(
                 'type' => $request->type,
                 'password' => Crypt::encrypt('password'),
-                'status' => $request->status,
                 'email' => $request->email,
                 'email_verified' => false,
             )
@@ -58,7 +57,8 @@ class AccountController extends Controller
             'name' => ucfirst(strtolower(trim($request->name))),
             'surname' => ucfirst(strtolower(trim($request->surname))),
             'userId' => $request->userId,
-            'type' => $newAccount->type
+            'type' => $newAccount->type,
+            'courseId' => $request->courseId
         );
 
         $this->createUser($createUserData);
