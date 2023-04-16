@@ -34,6 +34,10 @@ class TestsFilter extends ApiFilter
             'like',
             'ne'
         ),
+        'status' => array(
+            'eq',
+            'ne',
+        ),
     );
 
     // For camel cased params
