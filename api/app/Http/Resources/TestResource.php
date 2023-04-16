@@ -20,7 +20,8 @@ class TestResource extends JsonResource
             'courseModuleId' => $this->course_module_id,
             'date' => $this->date,
             'time' => $this->time,
-            'type' => $this->type
+            'type' => $this->type,
+            'status' => $this->status
         );
     }
 }
