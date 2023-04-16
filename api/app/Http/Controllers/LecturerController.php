@@ -31,6 +31,7 @@ class LecturerController extends Controller
                         'surname' => $data['surname'],
                         'lecturer_id' => $data['userId'],
                         'account_id' => $data['accountId'],
+                        'course_id' => $data['courseId']
                     )
                 )
             );
