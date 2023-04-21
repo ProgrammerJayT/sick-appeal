@@ -10,7 +10,7 @@ class TestsFilter extends ApiFilter
         'lecturerId' => array(
             'eq',
         ),
-        'courseModuleId' => array(
+        'moduleId' => array(
             'eq',
         ),
         'date' => array(
@@ -42,6 +42,7 @@ class TestsFilter extends ApiFilter
 
     // For camel cased params
     protected $columnMap = array(
-        'courseModuleId' => 'course_module_id',
+        'moduleId' => 'module_id',
+        'lecturerId' => 'lecturer_id',
     );
 }

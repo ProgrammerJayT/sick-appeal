@@ -29,9 +29,9 @@ class CourseResource extends JsonResource
         $courseModules = CourseModule::where('course_id', $id)->get();
         $modules = collect();
 
-        foreach ($courseModules as $courseModule) {
+        foreach ($courseModules as $module) {
             // $modules = Module::where('module_id', $courseModule->module_id)->get();
-            $modules->push(new ModuleResource(Module::where('module_id', $courseModule->module_id)->get()[0]));
+            $modules->push(new ModuleResource(Module::where('module_id', $module->module_id)->get()[0]));
         }
 
         return $modules;

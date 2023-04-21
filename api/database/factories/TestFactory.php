@@ -25,7 +25,7 @@ class TestFactory extends Factory
         return [
             //
             'lecturer_id' => Lecturer::all()->random()->getKey(),
-            'course_module_id' => CourseModule::all()->random()->getKey(),
+            'module_id' => CourseModule::all()->random()->getKey(),
             'date' => $date,
             'time' => $this->faker->time("H:i"),
             'type' => $type,

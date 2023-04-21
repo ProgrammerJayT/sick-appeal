@@ -17,7 +17,7 @@ class TestResource extends JsonResource
         return array(
             'testId' => $this->test_id,
             'lecturerId' => $this->lecturer_id,
-            'courseModuleId' => $this->course_module_id,
+            'moduleId' => $this->module_id,
             'date' => $this->date,
             'time' => $this->time,
             'type' => $this->type,
