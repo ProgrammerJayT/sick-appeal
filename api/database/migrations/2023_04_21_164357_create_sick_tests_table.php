@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sick_tests', function (Blueprint $table) {
-            $table->id();
+            $table->integer('sick_test_id')->autoIncrement();
+            $table->integer('test_id');
+            $table->date('date');
+            $table->time('time');
+            $table->string('venue');
             $table->timestamps();
         });
     }

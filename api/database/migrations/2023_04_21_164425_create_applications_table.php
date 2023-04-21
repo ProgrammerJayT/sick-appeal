@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('applications', function (Blueprint $table) {
-            $table->id();
+            $table->integer('application_id')->autoIncrement();
+            $table->integer('test_id');
+            $table->boolean('has_attachment(s)');
+            $table->string('status');
             $table->timestamps();
         });
     }

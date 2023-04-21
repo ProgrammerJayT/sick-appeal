@@ -13,10 +13,11 @@ return new class extends Migration {
         Schema::create('tests', function (Blueprint $table) {
             $table->integer('test_id')->autoIncrement();
             $table->integer('lecturer_id');
-            $table->integer('course_module_id');
+            $table->integer('module_id');
             $table->date('date');
             $table->time('time');
             $table->string('type');
+            $table->string('venue');
             $table->string('status')->nullable();
             $table->timestamps();
         });
