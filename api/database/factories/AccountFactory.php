@@ -41,12 +41,11 @@ class AccountFactory extends Factory
                 break;
 
             case 'admin':
-                $email = strtolower($this->faker->firstName() . '.' . $this->faker->lastName() . '@timestamp.co.za');
+                $email = strtolower($this->faker->firstName() . '.' . $this->faker->lastName() . '@sick-applications.co.za');
                 break;
 
             default:
                 //
-                dd('broke');
                 break;
         }
 
