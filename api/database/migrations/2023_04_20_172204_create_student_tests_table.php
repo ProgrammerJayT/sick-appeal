@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_tests', function (Blueprint $table) {
-            $table->id('student_test_id')->autoIncrement();
-            $table->id('student_id');
-            $table->id('test_id');
+            $table->integer('student_test_id')->autoIncrement();
+            $table->integer('student_id');
+            $table->integer('test_id');
             $table->timestamps();
         });
     }
