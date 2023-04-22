@@ -31,8 +31,6 @@ class ModuleSeeder extends Seeder
     public function assignModules()
     {
         $this->modules = array(
-
-            //First course modules (Computer... engineering)
             array(
                 'code' => 'CAG216D',
                 'name' => 'Computer Architecture and Organization 216',
@@ -57,16 +55,9 @@ class ModuleSeeder extends Seeder
                 'code' => 'PGM216D',
                 'name' => 'Programming 216',
             ),
-
-
-            //Second course modules (Multimedia)
             array(
                 'code' => 'DTP216D',
                 'name' => 'Database Principles',
-            ),
-            array(
-                'code' => 'MTE216D',
-                'name' => 'Multimedia Technology',
             ),
             array(
                 'code' => 'OOP216D',
@@ -84,8 +75,6 @@ class ModuleSeeder extends Seeder
                 'code' => 'GMP216D',
                 'name' => 'Games Programming',
             ),
-
-            //Third course modules (Information Technology)
             array(
                 'code' => 'CN1216D',
                 'name' => 'Computer Networks 215R',
@@ -110,32 +99,9 @@ class ModuleSeeder extends Seeder
                 'code' => 'VMA216D',
                 'name' => 'Virtual Machines 216R',
             ),
-
-
-            //Fourth course modules (Multimedia)
-            array(
-                'code' => 'DTP216D',
-                'name' => 'Database Principles',
-            ),
             array(
                 'code' => 'MTE216D',
                 'name' => 'Multimedia Technology',
-            ),
-            array(
-                'code' => 'OOP216D',
-                'name' => 'Object-Oriented Programming',
-            ),
-            array(
-                'code' => 'TMO216D',
-                'name' => '3D Modelling',
-            ),
-            array(
-                'code' => 'AOP216D',
-                'name' => 'Advanced Object-Oriented programming',
-            ),
-            array(
-                'code' => 'GMP216D',
-                'name' => 'Games Programming',
             ),
         );
     }
