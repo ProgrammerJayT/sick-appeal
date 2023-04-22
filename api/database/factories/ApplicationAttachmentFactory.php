@@ -16,8 +16,14 @@ class ApplicationAttachmentFactory extends Factory
      */
     public function definition(): array
     {
+        $type = $this->faker->randomElement(['image', 'pdf']);
+        $url = $this->faker->url();
+
         return [
             //
+            'application_id' => rand(1, 99),
+            'type' => $type,
+            'url' => $url
         ];
     }
 }
