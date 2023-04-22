@@ -5,21 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\StudentModules;
 use App\Http\Requests\StoreStudentModulesRequest;
 use App\Http\Requests\UpdateStudentModulesRequest;
+use Illuminate\Http\Request;
 
 class StudentModulesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(Request $request)
     {
         //
     }
@@ -38,6 +31,7 @@ class StudentModulesController extends Controller
     public function show(StudentModules $studentModules)
     {
         //
+        return new Stude
     }
 
     /**
