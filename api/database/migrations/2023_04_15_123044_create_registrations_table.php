@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('registration_id')->autoIncrement();
             $table->integer('course_id');
             $table->integer('student_id');
-            $table->date('year');
+            $table->string('year');
             $table->string('status');
             $table->timestamps();
         });
