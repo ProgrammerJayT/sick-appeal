@@ -17,7 +17,7 @@ class AccountSeeder extends Seeder
     public function run(): void
     {
         //
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $account = Account::factory(1)
                 ->create();
 
