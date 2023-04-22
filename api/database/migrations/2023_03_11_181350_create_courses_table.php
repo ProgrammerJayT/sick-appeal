@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('courses', function (Blueprint $table) {
             $table->integer('course_id')->autoIncrement();
             $table->string('name');
-            $table->string('code');
             $table->timestamps();
         });
     }
