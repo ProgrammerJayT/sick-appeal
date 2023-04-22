@@ -19,15 +19,27 @@ class CourseModuleSeeder extends Seeder
         $modules = Module::all();
         $courses = Course::all();
 
-        for ($i = 0; $i < count($courses); $i++) {
-            $numCourses = rand(0, count($modules));
+        foreach ($courses as $course) {
+            $numModules = rand(5, 10);
 
-            for ($j = 0; $j < $numCourses; $j++) {
+            for ($i = 0; $i < $numModules; $i++) {
                 CourseModule::create([
-                    'course_id' => $courses->random()->getKey(),
-                    'module_id' => $modules->random()->getKey()
+                    'course_id' => $course->course_id,
+                    'module_id' => $this->checkModuleExist($modules->random()->getKey(), $course->course_id)
                 ]);
             }
         }
+    }
+
+    public function checkModuleExist($module_id, $course_id)
+    {
+        $exists = CourseModule::where('course_id', $course_id)->where('module_id', $module_id)->first();
+        return $exists ? $this->getNewModule($module_id) : $module_id;
+    }
+
+    public function getNewModule($id)
+    {
+        $newModule = Module::where('module_id', $id)->get()->random()->getKey();
+        return $newModule;
     }
 }
