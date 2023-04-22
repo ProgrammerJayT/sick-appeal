@@ -9,6 +9,10 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentCollection;
 use App\Http\Resources\StudentResource;
 use App\Models\Account;
+use App\Models\Course;
+use App\Models\CourseModule;
+use App\Models\Module;
+use App\Models\StudentModule;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -22,15 +26,7 @@ class StudentController extends Controller
         $filter = new StudentsFilter();
         $filterItems = $filter->transform($request);
 
-        $includeCourses = $request->query('include_modules');
-
-        $students = Student::where($filterItems);
-
-        if ($includeCourses) {
-            $students = $students->with('modules');
-        }
-
-        return new StudentCollection($students->get());
+        return new StudentCollection(Student::where($filterItems)->get());
     }
 
     /**
@@ -39,16 +35,28 @@ class StudentController extends Controller
     public function store($data)
     {
         try {
-            return new StudentResource(
-                Student::create(
-                    array(
-                        'name' => $data['name'],
-                        'surname' => $data['surname'],
-                        'student_id' => $data['userId'],
-                        'account_id' => $data['accountId'],
-                    )
+            $newStudent = Student::create(
+                array(
+                    'name' => $data['name'],
+                    'surname' => $data['surname'],
+                    'student_id' => $data['userId'],
+                    'account_id' => $data['accountId'],
                 )
             );
+
+            $courseModules = CourseModule::where('course_id', $data['courseId'])->get();
+            try {
+                foreach ($courseModules as $module) {
+                    StudentModule::create([
+                        'module_id' => $module->module_id,
+                        'student_id' => $newStudent->student_id
+                    ]);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+
+            return new StudentResource($newStudent);
         } catch (\Throwable $th) {
 
             throw $th;

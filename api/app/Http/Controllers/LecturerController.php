@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\LecturersFilter;
 use App\Models\Lecturer;
 use App\Http\Requests\StoreLecturerRequest;
 use App\Http\Requests\UpdateLecturerRequest;
+use App\Http\Resources\LecturerCollection;
 use App\Http\Resources\LecturerResource;
+use Illuminate\Http\Request;
 
 class LecturerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filter = new LecturersFilter();
+        $filterItems = $filter->transform($request);
+
+        return new LecturerCollection(Lecturer::where($filterItems)->get());
     }
 
     /**
