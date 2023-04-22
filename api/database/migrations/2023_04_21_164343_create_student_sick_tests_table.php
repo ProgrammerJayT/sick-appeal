@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('student_sick_tests', function (Blueprint $table) {
             $table->integer('student_sick_test_id')->autoIncrement();
             $table->integer('student_id');
-            $table->integer('sick_test');
+            $table->integer('sick_test_id');
             $table->timestamps();
         });
     }
