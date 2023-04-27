@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
                 ModuleSeeder::class,
                 CourseModuleSeeder::class,
                 AccountSeeder::class,
-                RegistrationSeeder::class
-                // TestSeeder::class
+                RegistrationSeeder::class,
+                TestSeeder::class
                 // ApplicationAttachmentSeeder::class
             )
         );
