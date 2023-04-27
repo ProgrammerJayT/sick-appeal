@@ -21,35 +21,17 @@ class TestFactory extends Factory
     {
         $type = $this->faker->randomElement(array('web', 'semester', 'class'));
         $date = $this->faker->dateTimeThisYear()->format('Y-m-d');
+        $lecturer = Lecturer::all()->random();
+        $module = CourseModule::where('course_id', $lecturer->getAttribute('course_id'))->get()->random();
 
         return [
             //
-            'lecturer_id' => Lecturer::all()->random()->getKey(),
-            'module_id' => CourseModule::all()->random()->getKey(),
+            'lecturer_id' => $lecturer->getKey(),
+            'module_id' => $module->module_id,
             'date' => $date,
             'time' => $this->faker->time("H:i"),
             'type' => $type,
-            'status' => $this->setStatus($date)
+            'venue' => $this->faker->streetAddress()
         ];
-    }
-
-    public function setStatus($date)
-    {
-        // $dateToday = now()->format('Y-m-d');
-        $dateToday = Carbon::createFromFormat('Y-m-d', now()->today()->toDateString());
-
-        if ($date >= $dateToday) {
-            return 'pending';
-        }
-
-        $diffInDays = $dateToday->diffInDays($date);
-
-        // dd('Test date: ' . $date . '. Difference: ' . $diffInDays);
-
-        if ($diffInDays > 2) {
-            return 'expired';
-        }
-
-        return 'open';
     }
 }
