@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->time('time');
             $table->string('type');
             $table->string('venue');
-            $table->string('status')->nullable();
+            $table->string('status')->default('PL'); //PL->Pending Lecturer, AP->Applications Open
             $table->timestamps();
         });
     }
