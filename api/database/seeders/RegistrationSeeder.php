@@ -21,7 +21,7 @@ class RegistrationSeeder extends Seeder
                 'student_id' => $student->student_id,
                 'course_id' => Course::all()->random()->getKey(),
                 'year' => fake()->dateTimeThisYear()->format('Y'),
-                'status' => 'registered'
+                'status' => fake()->randomElement(array('registered', 'deregistered'))
             ]);
         }
     }
