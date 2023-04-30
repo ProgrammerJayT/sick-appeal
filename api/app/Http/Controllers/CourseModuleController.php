@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CourseModuleCollection;
 use App\Models\CourseModule;
 use App\Http\Requests\StoreCourseModuleRequest;
 use App\Http\Requests\UpdateCourseModuleRequest;
@@ -14,14 +15,7 @@ class CourseModuleController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new CourseModuleCollection(CourseModule::all());
     }
 
     /**
@@ -41,14 +35,6 @@ class CourseModuleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CourseModule $courseModule)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCourseModuleRequest $request, CourseModule $courseModule)
@@ -62,5 +48,6 @@ class CourseModuleController extends Controller
     public function destroy(CourseModule $courseModule)
     {
         //
+        return $courseModule->delete();
     }
 }
