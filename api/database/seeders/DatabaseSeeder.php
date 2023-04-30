@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
                 CourseModuleSeeder::class,
                 AccountSeeder::class,
                 RegistrationSeeder::class,
+                LecturerModuleSeeder::class,
+                StudentModulesSeeder::class,
                 TestSeeder::class
                 // ApplicationAttachmentSeeder::class
             )
