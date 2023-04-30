@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SickTest extends Model
 {
+    protected $primaryKey = 'sick_test_id';
+    protected $guarded = [];
     use HasFactory;
 }
