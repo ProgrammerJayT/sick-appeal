@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\StudentsFilter;
+use App\Http\Controllers\Auth\CreateUser;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -34,33 +35,11 @@ class StudentController extends Controller
      */
     public function store($data)
     {
-        try {
-            $newStudent = Student::create(
-                array(
-                    'name' => $data['name'],
-                    'surname' => $data['surname'],
-                    'student_id' => $data['userId'],
-                    'account_id' => $data['accountId'],
-                )
-            );
+        //
+        $createUser = new CreateUser();
+        $newUser = $createUser->create($data);
 
-            $courseModules = CourseModule::where('course_id', $data['courseId'])->get();
-            try {
-                foreach ($courseModules as $module) {
-                    StudentModule::create([
-                        'module_id' => $module->module_id,
-                        'student_id' => $newStudent->student_id
-                    ]);
-                }
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
-
-            return new StudentResource($newStudent);
-        } catch (\Throwable $th) {
-
-            throw $th;
-        }
+        return $newUser->getData();
     }
 
     /**
