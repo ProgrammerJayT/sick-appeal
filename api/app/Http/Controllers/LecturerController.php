@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\LecturersFilter;
 use App\Models\Lecturer;
+use App\Models\CourseModule;
+use Illuminate\Http\Request;
+use App\Filters\LecturersFilter;
+use App\Http\Resources\LecturerResource;
+use App\Http\Controllers\Auth\CreateUser;
+use App\Http\Resources\LecturerCollection;
 use App\Http\Requests\StoreLecturerRequest;
 use App\Http\Requests\UpdateLecturerRequest;
-use App\Http\Resources\LecturerCollection;
-use App\Http\Resources\LecturerResource;
-use Illuminate\Http\Request;
 
 class LecturerController extends Controller
 {
@@ -30,22 +32,10 @@ class LecturerController extends Controller
     public function store($data)
     {
         //
-        try {
-            return new LecturerResource(
-                Lecturer::create(
-                    array(
-                        'name' => $data['name'],
-                        'surname' => $data['surname'],
-                        'lecturer_id' => $data['userId'],
-                        'account_id' => $data['accountId'],
-                        'course_id' => $data['courseId']
-                    )
-                )
-            );
-        } catch (\Throwable $th) {
+        $createUser = new CreateUser();
+        $newUser = $createUser->create($data);
 
-            throw $th;
-        }
+        return $newUser->getData();
     }
 
     /**
@@ -71,5 +61,6 @@ class LecturerController extends Controller
     public function destroy(Lecturer $lecturer)
     {
         //
+        return $lecturer->delete();
     }
 }
