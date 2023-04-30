@@ -12,8 +12,9 @@ return new class extends Migration {
     {
         Schema::create('student_modules', function (Blueprint $table) {
             $table->integer('student_module_id')->autoIncrement();
-            $table->integer('module_id');
             $table->integer('student_id');
+            $table->integer('module_id');
+            $table->string('year');
             $table->timestamps();
         });
     }
