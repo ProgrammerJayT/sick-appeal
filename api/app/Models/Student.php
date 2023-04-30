@@ -11,9 +11,4 @@ class Student extends Model
     protected $primaryKey = 'student_id';
     protected $guarded = [];
     use HasFactory;
-
-    public function account()
-    {
-        return $this->belongsTo(Account::class);
-    }
 }

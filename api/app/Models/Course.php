@@ -12,14 +12,4 @@ class Course extends Model
     protected $primaryKey = 'course_id';
     protected $guarded = [];
     use HasFactory;
-
-    public function courseModules()
-    {
-        return $this->hasMany(CourseModule::class);
-    }
-
-    public function modules()
-    {
-        return $this->belongsToMany(Module::class, 'course_modules');
-    }
 }
