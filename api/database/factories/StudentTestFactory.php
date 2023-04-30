@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Test;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,13 @@ class StudentTestFactory extends Factory
      */
     public function definition(): array
     {
+        // $testsAvailable = Test::where('status', 'open');
+        // $numTestsAvailable = $testsAvailable->count();
+
         return [
             //
+            'student_id' => 5,
+            'test_id' => 4
         ];
     }
 }
