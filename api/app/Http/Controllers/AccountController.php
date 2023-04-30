@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use App\Models\Account;
 use App\Models\Student;
 use App\Models\Lecturer;
@@ -13,6 +14,7 @@ use App\Http\Resources\AccountCollection;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 class AccountController extends Controller
 {
@@ -35,22 +37,31 @@ class AccountController extends Controller
     {
         //
         if ($this->checkUser($request->type, $request->userId)) {
-            return response(
-                array(
-                    'message' => 'User account already exists'
-                ),
-                403
-            );
+            return response()->json('User account already exists', 403);
         }
+
+        $type = $request->type;
+        $domain = $type == 'admin' ? '@sick-applications.co.za' : '@tut4life.ac.za';
+        $name = strtolower($request->name);
+        $surname = strtolower($request->surname);
+        $emailPrefix = $type == 'admin' ? $name . '.' . $surname : $request->userId;
+
+        $email = $emailPrefix . $domain;
 
         $newAccount = Account::create(
             array(
                 'type' => $request->type,
                 'password' => Crypt::encrypt('password'),
-                'email' => $request->email,
+                'email' => $email,
                 'email_verified' => false,
             )
         );
+
+        try {
+            // Mail::to('theanthem8@gmail.com')->send(new TestMail('2023-04-30'));
+        } catch (\Throwable $th) {
+            print_r($th->getMessage());
+        }
 
         $createUserData = array(
             'accountId' => $newAccount->account_id,
@@ -61,7 +72,19 @@ class AccountController extends Controller
             'courseId' => $request->courseId
         );
 
-        $this->createUser($createUserData);
+        $user = $this->createUser($createUserData);
+
+        if ($user->statusCode == 422) {
+
+            $account = new AccountController;
+
+            $account->destroy($newAccount);
+
+            return response()->json(
+                'Account creation failed. ' . $user->message,
+                422
+            );
+        }
 
         return new AccountResource($newAccount);
     }
