@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationAttachment extends Model
 {
+    protected $primaryKey = 'application_attachment_id';
+    protected $guarded = [];
     use HasFactory;
 }
