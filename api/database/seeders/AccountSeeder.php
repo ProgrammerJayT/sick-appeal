@@ -17,7 +17,7 @@ class AccountSeeder extends Seeder
     public function run(): void
     {
         //
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $account = Account::factory(1)
                 ->create();
 
@@ -43,23 +43,13 @@ class AccountSeeder extends Seeder
 
         switch ($type) {
             case 'student':
-                $model = new Student();
-                $data = array(
-                    'account_id' => $account->account_id,
-                    'name' => ucfirst(strtolower($name)),
-                    'surname' => ucfirst(strtolower($surname)),
-                    'student_id' => $id
-                );
-                break;
-
             case 'lecturer':
-                $model = new Lecturer();
+                $model = $type == 'lecturer' ? new Lecturer() : new Student();
                 $data = array(
                     'account_id' => $account->account_id,
                     'name' => ucfirst(strtolower($name)),
                     'surname' => ucfirst(strtolower($surname)),
-                    'lecturer_id' => $id,
-                    'course_id' => Course::inRandomOrder()->firstOrFail()->getKey()
+                    $type == 'lecturer' ? 'lecturer_id' : 'student_id' => $id,
                 );
                 break;
 
@@ -73,7 +63,7 @@ class AccountSeeder extends Seeder
                 break;
 
             default:
-                # code...
+                //Hopefully nothing breaks
                 break;
         }
 
