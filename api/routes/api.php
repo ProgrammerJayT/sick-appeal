@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseModuleController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RegistrationController;
@@ -31,6 +32,7 @@ Route::apiResource('lecturers', LecturerController::class);
 Route::apiResource('students', StudentController::class);
 
 //Academic
+Route::apiResource('course-modules', CourseModuleController::class);
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
 Route::apiResource('tests', TestController::class);
