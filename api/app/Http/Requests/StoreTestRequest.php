@@ -11,7 +11,7 @@ class StoreTestRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,12 @@ class StoreTestRequest extends FormRequest
     {
         return [
             //
+            'lecturerId' => ['required', 'digits:9,9'],
+            'moduleId' => ['required'],
+            'date' => ['required'],
+            'time' => ['required'],
+            'type' => ['required'],
+            'venue' => ['required']
         ];
     }
 }
