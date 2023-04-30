@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->integer('registration_id')->autoIncrement();
             $table->integer('course_id');
-            $table->integer('student_id');
             $table->string('year');
             $table->string('status');
             $table->timestamps();
