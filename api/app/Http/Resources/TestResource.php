@@ -21,7 +21,8 @@ class TestResource extends JsonResource
             'date' => $this->date,
             'time' => $this->time,
             'type' => $this->type,
-            'status' => $this->status
+            'venue' => $this->venue,
+            'status' => $this->status,
         );
     }
 }
