@@ -6,6 +6,7 @@ use App\Models\CourseModule;
 use App\Models\LecturerModule;
 use App\Models\Registration;
 use App\Models\Student;
+use App\Models\StudentCourse;
 use App\Models\StudentModule;
 use App\Models\StudentRegistration;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,17 +20,18 @@ class StudentModulesSeeder extends Seeder
     public function run(): void
     {
         //
-        $thisYear = now()->format('Y');
         foreach (Student::all() as $student) {
-            $studentRegistration = StudentRegistration::where('student_id', $student->student_id)->first();
-            $registration = Registration::find($studentRegistration->registration_id);
+            $thisYear = now()->format('Y');
+            $studentCourse = StudentCourse::where('year', $thisYear)->where('student_id', $student->student_id)->first();
 
-            foreach (CourseModule::where('course_id', $registration->course_id)->get() as $module) {
+            foreach (CourseModule::where('course_id', $studentCourse->course_id)->get() as $module) {
+                $lecturer = LecturerModule::where('module_id', $module->module_id)->get();
 
                 StudentModule::create([
                     'student_id' => $student->student_id,
                     'module_id' => $module->module_id,
-                    'year' => $registration->year
+                    'lecturer_id' => count($lecturer) > 0 ? $lecturer->random()->lecturer_id : 0,
+                    'year' => $thisYear
                 ]);
             }
         }

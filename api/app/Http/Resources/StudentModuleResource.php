@@ -17,6 +17,7 @@ class StudentModuleResource extends JsonResource
         return array(
             'studentModuleId' => $this->student_module_id,
             'courseModuleId' => $this->module_id,
+            'lecturerId' => $this->lecturer_id,
             'studentId' => $this->student_id,
         );
     }

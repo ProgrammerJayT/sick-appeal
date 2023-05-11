@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Academics\AssignCourses;
+use App\Http\Controllers\Academics\Schedule;
+use App\Http\Controllers\Auth\CreateAccount;
+use App\Http\Controllers\Auth\CreateUser;
+use App\Http\Controllers\Validation\ValidateAccount;
 use App\Mail\TestMail;
 use App\Models\Account;
 use App\Models\Student;
 use App\Models\Lecturer;
 use Illuminate\Http\Request;
 use App\Filters\AccountsFilter;
+use App\Http\Controllers\Academics\AssignModules;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\AccountResource;
 use App\Http\Resources\AccountCollection;
@@ -27,7 +33,9 @@ class AccountController extends Controller
         $filter = new AccountsFilter();
         $filterItems = $filter->transform($request);
 
-        return new AccountCollection(Account::where($filterItems)->get());
+        $accounts = Account::where($filterItems)->get();
+
+        return new AccountCollection($accounts);
     }
 
     /**
@@ -36,109 +44,60 @@ class AccountController extends Controller
     public function store(StoreAccountRequest $request)
     {
         //
-        if ($this->checkUser($request->type, $request->userId)) {
-            return response()->json('User account already exists', 403);
+        $validateAccount = new ValidateAccount;
+        $response = $validateAccount->test($request);
+
+        if ($response->status() != 200) {
+            return response()->json($response->getData(), $response->status());
         }
 
-        $type = $request->type;
-        $domain = $type == 'admin' ? '@sick-applications.co.za' : '@tut4life.ac.za';
-        $name = strtolower($request->name);
-        $surname = strtolower($request->surname);
-        $emailPrefix = $type == 'admin' ? $name . '.' . $surname : $request->userId;
+        $createAccount = new CreateAccount;
+        $createAccountResponse = $createAccount->create($request);
 
-        $email = $emailPrefix . $domain;
-
-        $newAccount = Account::create(
-            array(
-                'type' => $request->type,
-                'password' => Crypt::encrypt('password'),
-                'email' => $email,
-                'email_verified' => false,
-            )
-        );
-
-        try {
-            // Mail::to('theanthem8@gmail.com')->send(new TestMail('2023-04-30'));
-        } catch (\Throwable $th) {
-            print_r($th->getMessage());
+        if ($createAccountResponse->status() != 201) {
+            return response()->json($createAccountResponse->getData(), $createAccountResponse->status());
         }
 
+        //Get newly created account
+        $newAccount = $createAccountResponse->getData();
+
+        //Set values for creating user type
         $createUserData = array(
-            'accountId' => $newAccount->account_id,
+            'account_id' => $newAccount->accountId,
             'name' => ucfirst(strtolower(trim($request->name))),
             'surname' => ucfirst(strtolower(trim($request->surname))),
-            'userId' => $request->userId,
+            'user_id' => $request->userId,
             'type' => $newAccount->type,
-            'courseId' => $request->courseId
+            'course_id' => $request->courseId
         );
 
-        $user = $this->createUser($createUserData);
+        //Instantiate create user controller
+        $createUser = new CreateUser;
+        $createUserResponse = $createUser->create($createUserData);
 
-        if ($user->statusCode == 422) {
-
-            $account = new AccountController;
-
-            $account->destroy($newAccount);
-
-            return response()->json(
-                'Account creation failed. ' . $user->message,
-                422
-            );
+        if ($createUserResponse->status() != 201) {
+            Account::find($newAccount->accountId)->delete();
+            return response()->json($createUserResponse->getData(), $createUserResponse->status());
         }
 
-        return new AccountResource($newAccount);
-    }
+        //Get newly created user
+        $newUser = $createUserResponse->getData();
 
-    /**
-     * Check if user exists
-     */
-    public function checkUser($type, $id)
-    {
-        switch ($type) {
-            case 'student':
-                $model = new Student();
-                break;
+        if ($newAccount->type != 'admin') {
+            $assignCourse = new AssignCourses;
+            $assignCourseResponse = $assignCourse->loadOne($newUser->{$newAccount->type . 'Id'}, $newAccount->type, $request->courseId);
+            $userCourse = $assignCourseResponse->getData();
 
-            case 'lecturer':
-                $model = new Lecturer();
-                break;
+            $assignModules = new AssignModules;
+            $assignModules->generate($newAccount->type, $userCourse->courseId, $newUser->{$newAccount->type . 'Id'});
 
-            default:
-                $model = null;
-                break;
+            if ($newAccount->type == 'lecturer') {
+                $schedule = new Schedule;
+                return $schedule->create($newUser->lecturerId);
+            }
         }
 
-        if ($model == null) {
-            return false;
-        }
-
-        return $model->find($id);
-    }
-
-    /**
-     * Now create user type based off of type
-     */
-    public function createUser($data)
-    {
-        switch ($data['type']) {
-            case 'student':
-                $userController = new StudentController();
-                break;
-
-            case 'lecturer':
-                $userController = new LecturerController();
-                break;
-
-            case 'admin':
-                $userController = new AdminController();
-                break;
-
-            default:
-                //
-                break;
-        }
-
-        return $userController->store($data);
+        return new AccountResource(Account::find($newAccount->accountId));
     }
 
     /**

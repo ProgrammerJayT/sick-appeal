@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Http\Controllers\Randomizer;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Account>
@@ -19,8 +20,8 @@ class AccountFactory extends Factory
 
     public $allTypes = array(
         'admin',
-        'student',
-        'lecturer'
+        // 'student',
+        // 'lecturer'
     );
 
     public $status = array(
@@ -41,7 +42,7 @@ class AccountFactory extends Factory
                 break;
 
             case 'admin':
-                $email = strtolower($this->faker->firstName() . '.' . $this->faker->lastName() . '@sick-applications.co.za');
+                $email = strtolower($this->faker->firstName() . '.' . $this->faker->lastName() . '@timestamp.co.za');
                 break;
 
             default:
@@ -52,8 +53,8 @@ class AccountFactory extends Factory
         return [
             //
             'type' => $type,
-            'password' => Crypt::encrypt('password'),
-            'status' => $this->faker->randomElement($this->status),
+            'password' => Hash::make('password'),
+            'status' => 'active',
             'email' => $email,
             'email_verified' => true,
         ];

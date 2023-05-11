@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -14,6 +15,7 @@ return new class extends Migration {
             $table->integer('student_module_id')->autoIncrement();
             $table->integer('student_id');
             $table->integer('module_id');
+            $table->integer('lecturer_id');
             $table->string('year');
             $table->timestamps();
         });

@@ -18,11 +18,12 @@ class DatabaseSeeder extends Seeder
                 ModuleSeeder::class,
                 CourseModuleSeeder::class,
                 AccountSeeder::class,
-                RegistrationSeeder::class,
-                LecturerModuleSeeder::class,
-                StudentModulesSeeder::class,
-                TestSeeder::class
-                // ApplicationAttachmentSeeder::class
+                // LecturerCourseSeeder::class,
+                // LecturerModuleSeeder::class,
+                // StudentCourseSeeder::class,
+                // StudentModulesSeeder::class,
+                VenueSeeder::class,
+                // ScheduleSeeder::class,
             )
         );
     }

@@ -24,7 +24,7 @@ class AccountResource extends JsonResource
             'status' => $this->status,
             'email' => $this->email,
             'emailVerified' => $this->email_verified,
-            'password' => Crypt::decrypt($this->password),
+            'password' => $this->password,
             'user' => $this->getUser($this->type, $this->account_id),
         );
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Lecturer;
 use App\Models\CourseModule;
+use App\Models\LecturerCourse;
 use App\Models\LecturerModule;
 use App\Models\LecturerRegistration;
 use App\Models\Registration;
@@ -19,9 +20,7 @@ class LecturerModuleSeeder extends Seeder
     {
 
         foreach (Lecturer::all() as $lecturer) {
-            $lecturerRegistration = LecturerRegistration::where('lecturer_id', $lecturer->lecturer_id)->first();
-            $lecturerCourse = Registration::find($lecturerRegistration->registration_id);
-
+            $lecturerCourse = LecturerCourse::where('lecturer_id', $lecturer->lecturer_id)->first();
             $modules = CourseModule::where('course_id', $lecturerCourse->course_id)->get();
 
             $count = 0;
