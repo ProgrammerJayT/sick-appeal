@@ -21,10 +21,9 @@ class Login extends Controller
 
         $email = $request->email;
         $password = $request->password;
-        $type = $request->type;
 
         try {
-            $account = Account::where('type', $type)->where('email', $email)->first();
+            $account = Account::where('email', $email)->first();
 
             if (!$account) {
                 return response()->json('Account not found', 404);
