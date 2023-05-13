@@ -139,7 +139,14 @@ class AccountController extends Controller
             $token = Str::random(40);
             $hashedToken = Hash::make($token);
 
-            Mail::to($request->email)->send(new EmailVerification($token));
+            try {
+                $account->update([
+                    'email_verification_token' => $hashedToken
+                ]);
+                Mail::to($request->email)->send(new EmailVerification($hashedToken));
+            } catch (\Throwable $th) {
+                throw $th;
+            }
 
             return response()->json(new AccountResource($account), 200);
         }
