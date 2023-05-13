@@ -8,6 +8,7 @@ use App\Models\Test;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\TestCollection;
+use App\Models\LecturerModule;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -32,6 +33,12 @@ class TestController extends Controller
     public function store(StoreTestRequest $request)
     {
         //
+        $lecturerModule = LecturerModule::where('module_id', $request->moduleId)->first();
+
+        if (!$lecturerModule) {
+            return response()->json('You are not enrolled for this module', 403);
+        }
+
         $tests = Test::where('lecturer_id', $request->lecturerId)->get();
 
         if ($tests->count() > 0) {
