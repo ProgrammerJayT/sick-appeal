@@ -40,7 +40,7 @@ class TestController extends Controller
                 'date' => $request->date,
                 'time' => $request->time,
                 'type' => $request->type,
-                'venue' => $request->venueId,
+                'venueId' => $request->venueId,
             ]);
 
             return response()->json(new TestResource($newTest), 201);
