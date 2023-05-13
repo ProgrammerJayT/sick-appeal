@@ -29,7 +29,7 @@ class StoreTestRequest extends FormRequest
             'date' => ['required', 'date'],
             'time' => ['required', Rule::in(array('08:00', '09:30', '11:00', '12:30', '14:00', '15:30'))],
             'type' => ['required', Rule::in(array('web', 'semester', 'class'))],
-            'venue' => ['required', 'numeric'],
+            'venueId' => ['required', 'numeric'],
         ];
     }
 }
