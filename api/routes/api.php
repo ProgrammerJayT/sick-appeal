@@ -40,7 +40,7 @@ Route::apiResource('course-modules', CourseModuleController::class);
 Route::apiResource('student-attendance', StudentAttendance::class);
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
-Route::apiResource('sessions', SessionController::class);
+Route::apiResource('tests', TestController::class);
 
 Route::post('login', [Login::class, 'login']);
 Route::post('email-verification', [AccountController::class, 'verify']);
