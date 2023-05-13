@@ -56,6 +56,8 @@ class AccountController extends Controller
         $createAccount = new CreateAccount;
         $createAccountResponse = $createAccount->create($request);
 
+        return $createAccountResponse;
+
         if ($createAccountResponse->status() != 201) {
             return response()->json($createAccountResponse->getData(), $createAccountResponse->status());
         }

@@ -23,6 +23,8 @@ class CreateAccount extends Controller
 
         $userExists = Account::where('email', $email)->first();
 
+        return $email;
+
         if ($userExists) {
             return response()->json('User already registered', 409);
         }
