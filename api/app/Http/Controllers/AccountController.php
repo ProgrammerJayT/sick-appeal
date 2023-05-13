@@ -17,7 +17,6 @@ use App\Http\Controllers\Auth\CreateUser;
 use App\Http\Resources\AccountCollection;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
-use App\Http\Controllers\Academics\Schedule;
 use App\Http\Controllers\Auth\CreateAccount;
 use App\Http\Controllers\Academics\AssignCourses;
 use App\Http\Controllers\Academics\AssignModules;
@@ -56,8 +55,6 @@ class AccountController extends Controller
         $createAccount = new CreateAccount;
         $createAccountResponse = $createAccount->create($request);
 
-        return $createAccountResponse;
-
         if ($createAccountResponse->status() != 201) {
             return response()->json($createAccountResponse->getData(), $createAccountResponse->status());
         }
@@ -94,11 +91,6 @@ class AccountController extends Controller
 
             $assignModules = new AssignModules;
             $assignModules->generate($newAccount->type, $userCourse->courseId, $newUser->{$newAccount->type . 'Id'});
-
-            if ($newAccount->type == 'lecturer') {
-                $schedule = new Schedule;
-                return $schedule->create($newUser->lecturerId);
-            }
         }
 
         return new AccountResource(Account::find($newAccount->accountId));

@@ -29,7 +29,6 @@ class LecturerResource extends JsonResource
     {
         //
         $assignCourse = new AssignCourses;
-        $loadSchedules = new LoadSchedules;
 
         return array(
             'lecturerId' => $this->lecturer_id,
@@ -37,7 +36,6 @@ class LecturerResource extends JsonResource
             'name' => $this->name,
             'surname' => $this->surname,
             'courses' => $assignCourse->loadCourses($this->lecturer_id, 'lecturer'),
-            'schedules' => $loadSchedules->load($this->lecturer_id)
         );
     }
 }

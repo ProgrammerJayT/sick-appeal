@@ -15,16 +15,13 @@ class CreateAccount extends Controller
     //
     public function create(StoreAccountRequest $request)
     {
-        // $email = strtolower($request->email ?? $request->type == 'admin' ? $request->userId : $request->userId . '@tut4life.ac.za'); //Account property
-        $email = strtolower($request->email); //Account property
+        $email = strtolower($request->email ?? $request->type == 'admin' ? $request->userId : $request->userId . '@tut4life.ac.za'); //Account property
         $status = $request->status; //Account property
         $password = $request->password; //Account property
         $type = $request->type; //Account property
         $status = 'pending';
 
         $userExists = Account::where('email', $email)->first();
-
-        return $email;
 
         if ($userExists) {
             return response()->json('User already registered', 409);
