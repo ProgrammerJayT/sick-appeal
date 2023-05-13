@@ -129,4 +129,19 @@ class AccountController extends Controller
         //
         return $account->delete();
     }
+
+    public function verify(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email']
+        ]);
+
+        $account = Account::where('email', $request->email)->first();
+
+        if ($account) {
+            return response()->json(new AccountResource($account), 200);
+        }
+
+        return response()->json('Email address not found', 404);
+    }
 }
