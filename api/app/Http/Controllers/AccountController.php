@@ -48,6 +48,7 @@ class AccountController extends Controller
         //
         $validateAccount = new ValidateAccount;
         $response = $validateAccount->test($request);
+        return $response;
 
         if ($response->status() != 200) {
             return response()->json($response->getData(), $response->status());
