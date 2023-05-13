@@ -32,6 +32,25 @@ class TestController extends Controller
     public function store(StoreTestRequest $request)
     {
         //
+        $tests = Test::where('lecturer_id', $request->lecturerId)->get();
+
+        if ($tests->count() > 0) {
+            foreach ($tests as $test) {
+                if ($test->date == $request->date && $test->module_id == $request->moduleId) {
+                    return response()->json('You already have a test scheduled for this module', 403);
+                }
+
+                if ($test->date == $request->date && $test->module_id != $request->moduleId && $test->time == $request->time) {
+                    return response()->json('You already have a test scheduled at this chosen time', 403);
+                }
+            }
+        }
+
+        if ($tests->count() > 2) {
+            return response()->json('You are fully booked for the day', 403);
+        }
+
+
 
         try {
             $newTest = Test::create([
