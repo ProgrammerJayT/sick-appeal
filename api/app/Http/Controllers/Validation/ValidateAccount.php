@@ -15,7 +15,7 @@ class ValidateAccount extends Controller
     {
         $type = $request->type;
         $userId = $request->userId;
-        $email = $type == 'admin' ? $userId : $userId . 'tut4life.ac.za';
+        $email = $type == 'admin' ? $userId : $userId . '@tut4life.ac.za';
 
         return $email;
 
