@@ -17,8 +17,6 @@ class ValidateAccount extends Controller
         $userId = $request->userId;
         $email = $type == 'admin' ? $userId : $userId . '@tut4life.ac.za';
 
-        return $email;
-
         $user = Account::where('email', $email)->first();
         if ($user) {
             return response()->json('User account exists', 403);
