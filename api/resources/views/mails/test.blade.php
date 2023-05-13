@@ -1,71 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Sick Application</title>
+    <title>New Test Available</title>
     <style>
-        /* Inline styles go here */
         body {
-            width: 100%;
-            background: url(&quot;assets/img/bg.jpg&quot;) center / cover no-repeat, var(--bs-secondary);
-        }
-
-        .container {
-            padding: 15px;
-        }
-
-        .col-md-6 {
-            flex-basis: 0;
-            flex-grow: 1;
-            max-width: 100%;
-        }
-
-        img {
-            width: 100%;
-        }
-
-        div[style*=background] {
-            box-shadow: 0px 0px 16px rgb(255, 255, 255);
-            border-radius: 20px;
-            padding: 10px;
-            background: rgba(163, 0, 16, 0.29);
+            background-color: #F6F6F6;
+            font-family: Arial, sans-serif;
         }
 
         h1 {
-            width: 100%;
-            color: #fff;
-        }
-
-        h4 {
-            width: 100%;
-            margin-top: 20px;
-            color: #fff;
+            color: #1F2937;
+            font-size: 24px;
+            margin-top: 0;
         }
 
         p {
-            margin-top: 20px;
-            color: #fff;
+            color: #4B5563;
+            font-size: 16px;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .date {
+            background-color: #FCA5A5;
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 16px;
+            margin-bottom: 24px;
+        }
+
+        .details {
+            background-color: #00ff44;
+            color: #1F2937;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .details h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .footer {
+            color: #6B7280;
+            font-size: 14px;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 0;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 d-md-flex flex-row justify-content-md-center">
-                <img src="assets/img/schedule.png">
-            </div>
-            <div class="col-md-6 d-md-flex flex-column justify-content-md-center align-items-md-start">
-                <div
-                    style="background: rgba(163,0,16,0.29); box-shadow: 0px 0px 16px rgb(255,255,255); border-radius: 20px; padding: 10px;">
-                    <h1>Hey Student!</h1>
-                    <h4>You have a new test scheduled by your lecturer, on the {{ $date }}</h4>
-                    <p>Please make sure not to miss, however you will get a chance to apply for a sick test, provided
-                        that you have a valid reason for missing the initial test</p>
-                </div>
-            </div>
+        <h1>New Test Available!</h1>
+        <div class="date">{{ $date }}</div>
+        <p>Dear student,</p>
+        <p>We are pleased to announce that a new test is available for you to take. The details are as follows:</p>
+        <div class="details">
+            <h2>Test Details</h2>
+            <p><strong>Module:</strong> {{ $module }}</p>
+            <p><strong>Venue:</strong> {{ $venue }}</p>
+            <p><strong>Time:</strong> {{ $time }}</p>
+            <p><strong>Lecturer:</strong> {{ $lecturer->name . ' ' . $lecturer->surname }}</p>
+        </div>
+        <p>Please log in to your account to take the test.</p>
+        <div class="footer">
+            <p>If you have any questions or concerns, please contact us at <a
+                    href="enquiries@sick-applications.co.za">enquiries@sick-applications.co.za</a>.</p>
         </div>
     </div>
 </body>

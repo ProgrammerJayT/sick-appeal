@@ -42,7 +42,6 @@ class StoreAccountRequest extends FormRequest
             'password' => ['required', 'min:8'],
             'type' => ['required', Rule::in($this->types)],
             'userId' => ['required_if:type,student,lecturer', 'numeric'],
-            'courseId' => ['required_if:type,lecturer,student']
         ];
     }
 }

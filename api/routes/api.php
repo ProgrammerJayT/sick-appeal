@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseModuleController;
 use App\Http\Controllers\LecturerController;
@@ -37,3 +38,5 @@ Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
 Route::apiResource('tests', TestController::class);
 Route::apiResource('registrations', RegistrationController::class);
+
+Route::post('login', [Login::class]);
