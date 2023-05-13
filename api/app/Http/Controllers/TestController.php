@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\TestsFilter;
+use App\Http\Resources\TestResource;
 use App\Models\Test;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
+use App\Http\Resources\TestCollection;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-    }
+        $filter = new TestsFilter();
+        $filterItems = $filter->transform($request);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $accounts = Test::where($filterItems)->get();
+
+        return new TestCollection($accounts);
     }
 
     /**
@@ -30,6 +32,22 @@ class TestController extends Controller
     public function store(StoreTestRequest $request)
     {
         //
+
+        try {
+            $newTest = Test::create([
+                'lecturer_id' => $request->lecturerId,
+                'module_id' => $request->moduleId,
+                'date' => $request->date,
+                'time' => $request->time,
+                'type' => $request->type,
+                'venue' => $request->venueId,
+            ]);
+
+            return response()->json(new TestResource($newTest), 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json('Failed to create test. ' . $th->getMessage(), 500);
+        }
     }
 
     /**

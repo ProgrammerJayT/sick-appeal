@@ -24,12 +24,12 @@ class StoreTestRequest extends FormRequest
     {
         return [
             //
-            'lecturerId' => ['required', 'digits:9,9'],
-            'moduleId' => ['required'],
-            'date' => ['required'],
+            'lecturerId' => ['required', 'digits:9,9', 'numeric'],
+            'moduleId' => ['required', 'numeric'],
+            'date' => ['required', 'date'],
             'time' => ['required', Rule::in(array('08:00', '09:30', '11:00', '12:30', '14:00', '15:30'))],
             'type' => ['required', Rule::in(array('web', 'semester', 'class'))],
-            'venue' => ['required', Rule::in(array('10-120', 'Ruth First Hall', '14-1106', '10-140'))],
+            'venue' => ['required', 'numeric'],
         ];
     }
 }

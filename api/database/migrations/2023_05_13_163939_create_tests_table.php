@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tests', function (Blueprint $table) {
-            $table->id();
+            $table->integer('test_id')->autoIncrement();
+            $table->integer('lecturer_id');
+            $table->integer('module_id');
+            $table->integer('venue_id');
+            $table->date('date');
+            $table->time('time');
+            $table->string('type');
             $table->timestamps();
         });
     }
