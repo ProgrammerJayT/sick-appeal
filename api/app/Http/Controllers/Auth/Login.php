@@ -17,7 +17,6 @@ class Login extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'type' => 'required|in:student,lecturer,admin',
         ]);
 
         $email = $request->email;
