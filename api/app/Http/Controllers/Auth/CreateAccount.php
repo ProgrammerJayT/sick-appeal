@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class CreateAccount extends Controller
 {
     //
-    public function create(Request $request)
+    public function create(StoreAccountRequest $request)
     {
         // $email = strtolower($request->email ?? $request->type == 'admin' ? $request->userId : $request->userId . '@tut4life.ac.za'); //Account property
         $email = strtolower($request->email); //Account property
