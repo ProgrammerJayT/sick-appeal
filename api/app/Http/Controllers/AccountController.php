@@ -132,9 +132,15 @@ class AccountController extends Controller
             'email' => ['required', 'email']
         ]);
 
+        $request->resend ? $resend = true : false;
+
         $account = Account::where('email', $request->email)->first();
 
         if ($account) {
+
+            // if ($account->email_verification_token && $resend) {
+            //     return response()->json('An email verification link has already been sent to you. Please check your emails');
+            // }
 
             $token = Str::random(40);
             $hashedToken = Hash::make($token);
