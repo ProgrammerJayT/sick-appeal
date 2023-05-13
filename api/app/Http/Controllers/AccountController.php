@@ -71,7 +71,6 @@ class AccountController extends Controller
             'user_id' => $request->userId,
             'type' => $newAccount->type,
             'course_id' => $request->courseId,
-            'status' => 'pending'
         );
 
         //Instantiate create user controller

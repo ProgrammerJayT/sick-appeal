@@ -19,6 +19,7 @@ class CreateAccount extends Controller
         $status = $request->status; //Account property
         $password = $request->password; //Account property
         $type = $request->type; //Account property
+        $status = $request->status;
 
         $userExists = Account::where('email', $email)->first();
 
@@ -33,7 +34,7 @@ class CreateAccount extends Controller
                     'password' => Hash::make($password),
                     'email' => $email,
                     'email_verified' => false,
-                    'status' => $status
+                    'status' => $status,
                 )
             );
             return response()->json(new AccountResource($newAccount), 201);
