@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Academics\AssignCourses;
-use App\Http\Controllers\Academics\Schedule;
-use App\Http\Controllers\Auth\CreateAccount;
-use App\Http\Controllers\Auth\CreateUser;
-use App\Http\Controllers\Validation\ValidateAccount;
 use App\Mail\TestMail;
 use App\Models\Account;
 use App\Models\Student;
 use App\Models\Lecturer;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Filters\AccountsFilter;
-use App\Http\Controllers\Academics\AssignModules;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Resources\AccountResource;
+use App\Http\Controllers\Auth\CreateUser;
 use App\Http\Resources\AccountCollection;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Academics\Schedule;
+use App\Http\Controllers\Auth\CreateAccount;
+use App\Http\Controllers\Academics\AssignCourses;
+use App\Http\Controllers\Academics\AssignModules;
+use App\Http\Controllers\Validation\ValidateAccount;
+use App\Mail\EmailVerification;
 
 class AccountController extends Controller
 {
@@ -68,7 +70,8 @@ class AccountController extends Controller
             'surname' => ucfirst(strtolower(trim($request->surname))),
             'user_id' => $request->userId,
             'type' => $newAccount->type,
-            'course_id' => $request->courseId
+            'course_id' => $request->courseId,
+            'status' => 'pending'
         );
 
         //Instantiate create user controller
@@ -139,6 +142,12 @@ class AccountController extends Controller
         $account = Account::where('email', $request->email)->first();
 
         if ($account) {
+
+            $token = Str::random(40);
+            $hashedToken = Hash::make($token);
+
+            Mail::to($request->email)->send(new EmailVerification($token));
+
             return response()->json(new AccountResource($account), 200);
         }
 
