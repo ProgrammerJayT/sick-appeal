@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Johannesburg',
 
     /*
     |--------------------------------------------------------------------------
@@ -211,5 +211,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+
+    //User-defined values
+    'baseUrl' => 'https://127.0.0.1:8002/api/accounts'
 
 ];
