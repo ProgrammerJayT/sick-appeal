@@ -19,7 +19,7 @@ class CreateAccount extends Controller
         $status = $request->status; //Account property
         $password = $request->password; //Account property
         $type = $request->type; //Account property
-        $status = $request->status;
+        $status = 'pending';
 
         $userExists = Account::where('email', $email)->first();
 
