@@ -15,7 +15,8 @@ class CreateAccount extends Controller
     //
     public function create(StoreAccountRequest $request)
     {
-        $email = strtolower($request->email ?? $request->type == 'admin' ? $request->userId : $request->userId . '@tut4life.ac.za'); //Account property
+        $request->email ? $email = $request->email  : $email = $request->userId . '@tut4life.ac.za';
+        $email = strtolower($email);
         $status = $request->status; //Account property
         $password = $request->password; //Account property
         $type = $request->type; //Account property
