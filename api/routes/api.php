@@ -43,3 +43,4 @@ Route::apiResource('modules', ModuleController::class);
 Route::apiResource('sessions', SessionController::class);
 
 Route::post('login', [Login::class, 'login']);
+Route::post('email-verification', [AccountController::class, 'verify']);
