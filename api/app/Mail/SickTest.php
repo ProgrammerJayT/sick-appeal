@@ -13,12 +13,17 @@ class SickTest extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $lecturer, $module, $deadline;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($lecturer, $module, $deadline)
     {
         //
+        $this->lecturer = $lecturer;
+        $this->module = $module;
+        $this->deadline = $deadline;
     }
 
     /**
@@ -27,7 +32,7 @@ class SickTest extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Sick Test',
+            subject: 'Sick Test Applications Open',
         );
     }
 
@@ -37,10 +42,12 @@ class SickTest extends Mailable
     public function build()
     {
         return $this->view('mails.sick-test')
-            ->subject('Sick test applications now open');
-        // ->with([
-        //     'token' => $this->token,
-        // ]);
+            ->subject('Sick test applications now open')
+            ->with([
+                'lecturer' => $this->lecturer,
+                'module' => $this->module,
+                'deadline' => $this->deadline,
+            ]);
     }
 
     /**

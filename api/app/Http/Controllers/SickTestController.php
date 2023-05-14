@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateSickTestRequest;
 use App\Models\Test;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SickTest as SickTestEmail;
+use App\Models\Lecturer;
+use App\Models\Module;
 
 class SickTestController extends Controller
 {
@@ -40,13 +42,20 @@ class SickTestController extends Controller
                 'date' => $request->date
             ]);
 
-            $emailData = array();
-            $emailData['email'] = 'theanthem8@gmail.com';
+            $testInformation = Test::find($request->testId);
+            $lecturer = Lecturer::find($testInformation->lecturer_id);
+            $module = Module::find($testInformation->module_id);
+            $deadline = now()->addDays(3)->format('Y-m-d');
 
-            $sendEmail = new SendEmail;
-            $sendEmail->send(new SickTestEmail, $emailData);
+            $emailData = [
+                'email' => 'theanthem@8gmail.com',
+                'lecturer' => $lecturer->name . ' ' . $lecturer->surname,
+                'module' => $module->name,
+                'deadline' => $deadline,
+                'object' => 'sickTest'
+            ];
 
-            return response()->json($newSickTest, 201);
+            Mail::to('theanthem8@gmail.com')->send(new SickTestEmail($lecturer, $module, $deadline));
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json($th->getMessage(), 500);
