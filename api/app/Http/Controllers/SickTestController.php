@@ -57,14 +57,14 @@ class SickTestController extends Controller
             $deadline = now()->addDays(3)->format('Y-m-d');
 
             $studentModules = StudentModule::where('module_id', $test->test_id)->get();
-            $studentsToEmail = [];
             foreach ($studentModules as $studentModule) {
                 $student = Student::find($studentModule->student_id);
-                $studentsToEmail[] = $student;
                 $account = Account::find($student->account_id);
 
                 Mail::to($account->email)->send(new SickTestEmail($lecturer, $module, $deadline));
             }
+
+            return $newSickTest;
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json($th->getMessage(), 500);
