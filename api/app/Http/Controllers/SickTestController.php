@@ -64,7 +64,7 @@ class SickTestController extends Controller
                 Mail::to($account->email)->send(new SickTestEmail($lecturer, $module, $deadline));
             }
 
-            return $newSickTest;
+            return $newSickTest .  'Emails were sent to ' . $studentModules->count() . ' students';
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json($th->getMessage(), 500);
