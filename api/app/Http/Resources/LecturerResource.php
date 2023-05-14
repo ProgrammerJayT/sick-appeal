@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Http\Controllers\Academics\AssignCourses;
-use App\Http\Controllers\Academics\LoadSchedules;
 use App\Models\Test;
 use App\Models\Course;
 use App\Models\Module;
