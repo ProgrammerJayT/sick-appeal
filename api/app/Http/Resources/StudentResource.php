@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Http\Controllers\Academics\AssignCourses;
-use App\Http\Controllers\Academics\LoadTimetable;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\Module;
@@ -24,7 +23,6 @@ class StudentResource extends JsonResource
     {
         //
         $loadCoursesAndModules = new AssignCourses;
-        $loadTimetable = new LoadTimetable;
 
         return array(
             'studentId' => $this->student_id,
@@ -32,7 +30,6 @@ class StudentResource extends JsonResource
             'name' => $this->name,
             'surname' => $this->surname,
             'courses' => $loadCoursesAndModules->loadCourses($this->student_id, 'student'),
-            'classes' => $loadTimetable->load($this->student_id)
         );
     }
 }

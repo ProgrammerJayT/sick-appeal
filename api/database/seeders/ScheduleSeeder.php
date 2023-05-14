@@ -38,15 +38,6 @@ class ScheduleSeeder extends Seeder
 
                     $startTime = $times[$startIndex];
                     $endTime = date('H:i', strtotime($startTime . ' +1 hour 30 minutes'));
-
-                    Schedule::create([
-                        'module_id' => $module_id,
-                        'lecturer_id' => $lecturer_id,
-                        'venue_id' => $venue_id,
-                        'day' => $days[$randDays[$i]],
-                        'start_time' => $startTime,
-                        'end_time' => $endTime
-                    ]);
                 }
             }
         }
