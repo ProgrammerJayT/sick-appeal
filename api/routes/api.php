@@ -9,6 +9,7 @@ use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\SickTestController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestController;
 use App\Models\StudentAttendance;
@@ -37,7 +38,8 @@ Route::apiResource('students', StudentController::class);
 
 //Academic
 Route::apiResource('course-modules', CourseModuleController::class);
-Route::apiResource('student-attendance', StudentAttendance::class);
+Route::apiResource('sick-tests', SickTestController::class);
+Route::apiResource('student-attendances', StudentAttendance::class);
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
 Route::apiResource('tests', TestController::class);

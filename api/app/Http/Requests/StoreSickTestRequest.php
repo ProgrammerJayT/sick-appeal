@@ -11,7 +11,7 @@ class StoreSickTestRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,10 @@ class StoreSickTestRequest extends FormRequest
     {
         return [
             //
+            'testId' => ['required'],
+            'venueId' => ['required'],
+            'date' => ['required', 'date'],
+            'time' => ['required', 'time'],
         ];
     }
 }
