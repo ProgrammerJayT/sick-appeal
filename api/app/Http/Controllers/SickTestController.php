@@ -13,6 +13,7 @@ use App\Mail\SickTest as SickTestEmail;
 use App\Http\Requests\StoreSickTestRequest;
 use App\Http\Requests\UpdateSickTestRequest;
 use App\Http\Controllers\Operations\SendEmail;
+use App\Models\Account;
 
 class SickTestController extends Controller
 {
@@ -58,12 +59,12 @@ class SickTestController extends Controller
             $studentModules = StudentModule::where('module_id', $test->test_id)->get();
             $studentsToEmail = [];
             foreach ($studentModules as $studentModule) {
-                $studentsToEmail[] = Student::find($studentModule->student_id);
+                $student = Student::find($studentModule->student_id);
+                $studentsToEmail[] = $student;
+                $account = Account::find($student->account_id);
+
+                Mail::to($account->email)->send(new SickTestEmail($lecturer, $module, $deadline));
             }
-
-            return $studentsToEmail;
-
-            Mail::to('theanthem8@gmail.com')->send(new SickTestEmail($lecturer, $module, $deadline));
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json($th->getMessage(), 500);
