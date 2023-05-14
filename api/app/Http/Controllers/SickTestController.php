@@ -58,7 +58,7 @@ class SickTestController extends Controller
 
             $studentModules = StudentModule::where('module_id', $request->testId)->get();
 
-            return $studentModules;
+            return $newSickTest->test_id;
 
             foreach ($studentModules as $studentModule) {
                 $student = Student::find($studentModule->student_id);
