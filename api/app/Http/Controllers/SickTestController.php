@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SickTest as SickTestEmail;
 use App\Models\Lecturer;
 use App\Models\Module;
+use App\Models\StudentModule;
 
 class SickTestController extends Controller
 {
@@ -34,6 +35,12 @@ class SickTestController extends Controller
             return response()->json('Test not found', 404);
         }
 
+        $sickTest = SickTest::where('test_id', $request->testId)->first();
+
+        if ($sickTest) {
+            return response()->json('You already have sick test applications open', 409);
+        }
+
         try {
             $newSickTest = SickTest::create([
                 'test_id' => $request->testId,
@@ -47,13 +54,9 @@ class SickTestController extends Controller
             $module = Module::find($testInformation->module_id);
             $deadline = now()->addDays(3)->format('Y-m-d');
 
-            $emailData = [
-                'email' => 'theanthem@8gmail.com',
-                'lecturer' => $lecturer->name . ' ' . $lecturer->surname,
-                'module' => $module->name,
-                'deadline' => $deadline,
-                'object' => 'sickTest'
-            ];
+            $studentModules = StudentModule::where('module_id', $test->test_id)->get();
+
+            return $studentModules;
 
             Mail::to('theanthem8@gmail.com')->send(new SickTestEmail($lecturer, $module, $deadline));
         } catch (\Throwable $th) {
