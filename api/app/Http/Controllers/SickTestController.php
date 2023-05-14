@@ -55,7 +55,7 @@ class SickTestController extends Controller
             $module = Module::find($testInformation->module_id);
             $deadline = now()->addDays(3)->format('Y-m-d');
 
-            $studentModules = StudentModule::where('module_id', $test->test_id)->where('lecturer_id', $lecturer->lecturer_id)->get();
+            $studentModules = StudentModule::where('module_id', $test->test_id)->get();
             $studentsToEmail = [];
             foreach ($studentModules as $studentModule) {
                 $studentsToEmail[] = Student::find($studentModule->student_id);
