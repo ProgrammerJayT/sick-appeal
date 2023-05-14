@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreSickTestRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class StoreSickTestRequest extends FormRequest
             'testId' => ['required'],
             'venueId' => ['required'],
             'date' => ['required', 'date'],
-            'time' => ['required', 'time'],
+            'time' => ['required', Rule::in(array('08:00', '09:30', '11:00', '12:30', '14:00', '15:30'))],
         ];
     }
 }
