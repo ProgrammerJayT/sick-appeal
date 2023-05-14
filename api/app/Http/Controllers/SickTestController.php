@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Operations\SendEmail;
 use App\Models\SickTest;
 use App\Http\Requests\StoreSickTestRequest;
 use App\Http\Requests\UpdateSickTestRequest;
 use App\Models\Test;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SickTest as SickTestEmail;
 
 class SickTestController extends Controller
 {
@@ -36,6 +39,12 @@ class SickTestController extends Controller
                 'time' => $request->time,
                 'date' => $request->date
             ]);
+
+            $emailData = array();
+            $emailData['email'] = 'theanthem8@gmail.com';
+
+            $sendEmail = new SendEmail;
+            $sendEmail->send(new SickTestEmail, $emailData);
 
             return response()->json($newSickTest, 201);
         } catch (\Throwable $th) {
