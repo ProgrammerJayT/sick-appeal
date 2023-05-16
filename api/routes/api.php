@@ -39,7 +39,6 @@ Route::apiResource('students', StudentController::class);
 //Academic
 Route::apiResource('course-modules', CourseModuleController::class);
 Route::apiResource('sick-tests', SickTestController::class);
-Route::apiResource('student-attendances', StudentAttendance::class);
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
 Route::apiResource('tests', TestController::class);
