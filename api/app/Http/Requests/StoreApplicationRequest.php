@@ -11,7 +11,7 @@ class StoreApplicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,9 @@ class StoreApplicationRequest extends FormRequest
     {
         return [
             //
+            'testId' => ['required', 'numeric'],
+            'studentId' => ['required', 'numeric'],
+            'reason' => ['required'],
         ];
     }
 }
