@@ -13,7 +13,6 @@ use App\Http\Controllers\SickTestController;
 use App\Http\Controllers\StudentApplicationController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestController;
-use App\Models\StudentAttendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
