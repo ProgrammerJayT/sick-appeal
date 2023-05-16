@@ -1,14 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\Auth\CreateAccount;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseModuleController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SickTestController;
 use App\Http\Controllers\StudentApplicationController;
 use App\Http\Controllers\StudentController;
@@ -39,10 +37,12 @@ Route::apiResource('students', StudentController::class);
 //Academic
 Route::apiResource('student-applications', StudentApplicationController::class);
 Route::apiResource('course-modules', CourseModuleController::class);
+Route::apiResource('applications', ApplicationController::class);
 Route::apiResource('sick-tests', SickTestController::class);
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('modules', ModuleController::class);
 Route::apiResource('tests', TestController::class);
 
+//Authentication
 Route::post('login', [Login::class, 'login']);
 Route::post('email-verification', [AccountController::class, 'verify']);
