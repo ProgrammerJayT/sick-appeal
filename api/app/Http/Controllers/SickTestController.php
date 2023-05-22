@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\SickTestsFilter;
+use App\Http\Resources\SickTestCollection;
 use App\Models\Test;
 use App\Models\Module;
 use App\Models\Student;
@@ -14,15 +16,22 @@ use App\Http\Requests\StoreSickTestRequest;
 use App\Http\Requests\UpdateSickTestRequest;
 use App\Http\Controllers\Operations\SendEmail;
 use App\Models\Account;
+use Illuminate\Http\Request;
 
 class SickTestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filter = new SickTestsFilter();
+        $filterItems = $filter->transform($request);
+
+        $accounts = Account::where($filterItems)->get();
+
+        return new SickTestCollection($accounts);
     }
 
     /**
